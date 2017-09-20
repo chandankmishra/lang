@@ -6,6 +6,7 @@ class Node(object):
         self.right = None
 
 
+# Root, Left, Right
 def printPreorder(root):
     if root:
         # Print the node value
@@ -18,6 +19,26 @@ def printPreorder(root):
         printPreorder(root.right)
 
 
+# Left, Root, Right
+def printInorder(root):
+    if root:
+        printInorder(root.left)
+
+        print("{0} ".format(root.val), end='')
+
+        printInorder(root.right)
+
+
+# Left, Right, Root
+def printPostorder(root):
+    if root:
+        printInorder(root.left)
+
+        printInorder(root.right)
+
+        print("{0} ".format(root.val), end='')
+
+
 def main():
     root = Node(1)
     root.left = Node(2)
@@ -25,8 +46,17 @@ def main():
     root.left.left = Node(4)
     root.left.right = Node(5)
 
-    print("Preorder traversal of binary tree")
+    print("Preorder traversal of binary tree : ", end='')
     printPreorder(root)
+    print()
+
+    print("Inorder traversal of binary tree : ", end='')
+    printInorder(root)
+    print()
+
+    print("Postorder traversal of binary tree : ", end='')
+    printPostorder(root)
+    print()
 
 
 if __name__ == "__main__":
