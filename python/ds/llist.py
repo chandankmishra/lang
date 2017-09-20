@@ -14,9 +14,8 @@ class Node(object):
     def set_next(self, new_next):
         self.next = new_next
 
-# Linked list class contails a node object
 
-
+# Linked list class contains a node object
 class LinkedList(object):
     def __init__(self):
         self.head = None
@@ -51,7 +50,22 @@ class LinkedList(object):
 
     # Function to insert a node after the given preiv_ndoe
     def insertAfter(self, prev_node, new_data):
-        pass
+        if prev_node is None:
+            return
+
+        # Create the new node
+        new_node = Node(new_data)
+
+        # Set the next node of prev_node as next node of new node
+        new_node.next = prev_node.next
+
+        # Set new node as next of prev_node
+        prev_node.next = new_node
+
+    def deleteNode(self, key):
+        temp = self.head
+        while (temp.next):
+            temp = temp.next
 
 
 def main():
