@@ -37,18 +37,14 @@ def shouldPrintMessage(timestamp, message):
     :type message: str
     :rtype: bool
     """
-
-
     ts = 0
     if message not in logMap:
         logMap[message] = timestamp
         return True
     else:
-        ts = logMap[message]
-        if (timestamp - ts) >= 10:
+        if (timestamp - logMap[message]) >= 10:
             logMap[message] = timestamp
             return True
-
     return False
 
 
