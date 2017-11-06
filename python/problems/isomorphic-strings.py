@@ -23,17 +23,26 @@ def isIsomorphic(s, t):
     :type t: str
     :rtype: bool
     """
-    map = {}
+    map1 = {}
+    map2 = {}
     for i in range(0, len(s)):
-        if s[i] not in map:
-            map[s[i]] = t[i]
+        if s[i] not in map1:
+            map1[s[i]] = t[i]
         else:
-            print (map[s[i]], t[i])
-            if map[s[i]] != t[i]:
+            print (s, t, i)
+            print (map1[s[i]], t[i])
+            if map1[s[i]] != t[i]:
+                return False
+        if t[i] not in map2:
+            map2[t[i]] = s[i]
+        else:
+            print (s, t, i)
+            print (map2[t[i]], s[i])
+            if map2[t[i]] != s[i]:
                 return False
 
     return True
 
 
 # print(isIsomorphic("egg", "add"))
-print(isIsomorphic("eggst", "addtt"))
+print(isIsomorphic("eggsta", "addtkk"))
