@@ -10,7 +10,16 @@ Input: cost = [10, 15, 20]
 Output: 15
 Explanation: Cheapest is start on cost[1], pay that cost and go to the top.
 
+https://leetcode.com/contest/weekly-contest-63/problems/min-cost-climbing-stairs/
+
 """
+class Solution(object):
+    def minCostClimbingStairs(self, cost):
+        f1 = f2 = 0
+        for x in reversed(cost):
+            f1, f2 = x + min(f1, f2), f1
+        return min(f1, f2)
+
 class Solution {
 	    public int minCostClimbingStairs(int[] cost) {
 	        int n = cost.length;
