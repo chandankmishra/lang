@@ -1,19 +1,26 @@
-def isCycleUtilDfs(graph, v, visited, parent):
+def isCycleUtilDfs(graph, v, visited, recstack):
     visited.add(v)
+    recstack.add(v)
     #print (v, ",", end='')
 
-    for i in graph[v]:
-        if i not in visited:
-            if isCycleUtilDfs(graph, i, visited, v):
+    if v not in graph:
+        return False
+
+    for neighbour in graph[v]:
+        if neighbour not in visited:
+            if isCycleUtilDfs(graph, neighbour, visited, recstack):
                 return True
-        elif parent != i:
+        elif neighbour in recstack:
             return True
+    if neighbour in recstack:
+        recstack.remove(neighbour)
     return False
 
 
 def isCycleDfs(graph, v):
     visited = set()
-    return isCycleUtilDfs(graph, v, visited, -1)
+    recstack = set()
+    return isCycleUtilDfs(graph, v, visited, recstack)
 
 
 graph1 = {'A': ['B', 'C', 'E'],
@@ -26,7 +33,7 @@ graph1 = {'A': ['B', 'C', 'E'],
 graph2 = {'A': ['B'],
           'B': ['E'],
           'C': ['D'],
-          'D': ['C'],
+          #'D': ['E'],
           'E': ['F'],
           'F': ['C']}
 

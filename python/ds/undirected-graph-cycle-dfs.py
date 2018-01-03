@@ -2,11 +2,11 @@ def isCycleUtilDfs(graph, v, visited, parent):
     visited.add(v)
     #print (v, ",", end='')
 
-    for i in graph[v]:
-        if i not in visited:
-            if isCycleUtilDfs(graph, i, visited, v):
+    for neighbour in graph[v]:
+        if neighbour not in visited:
+            if isCycleUtilDfs(graph, neighbour, visited, v):
                 return True
-        elif parent != i:
+        elif parent != neighbour:
             return True
     return False
 
