@@ -1,4 +1,4 @@
-def selection_sort(arr):
+def bubble_sort(arr):
     l = len(arr)
     for i in range(l - 1):
         flag = False
@@ -12,4 +12,4 @@ def selection_sort(arr):
 
 
 arr = [5, 2, 4, 3, 1]
-print (selection_sort(arr))
+print (bubble_sort(arr))
