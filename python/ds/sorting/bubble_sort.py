@@ -1,12 +1,13 @@
 def bubble_sort(arr):
     l = len(arr)
-    for i in range(1, l - 1):
-        value = arr[i]
-        hole = i
-        while hole > 0 and arr[hole] - 1 > value:
-            arr[hole] = arr[hole - 1]
-            hole -= 1
-        arr[hole] = value
+    for i in range(l - 1):
+        flag = False
+        for j in range(0, l - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                flag = True
+        if flag is False:
+            break
     return arr
 
 
