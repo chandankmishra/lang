@@ -1,1 +1,0 @@
-# STL related programs.
