@@ -22,7 +22,7 @@ def inplace_change(filename, old_string, new_string):
 def replace_file(filename):
     print (filename)
     #inplace_change(filename, "", "")
-    inplace_change(filename, "from_str", "to_str")
+    inplace_change(filename, "old_string", "new_string")
 
 #for root, directories, filenames in os.walk('/b/cmishra/PVT_ZH_BRINGUP_JUNOS_BRANCH/src/pfe/common/pfe-arch/mzphr/'):
 for root, directories, filenames in os.walk(os.getcwd()):
