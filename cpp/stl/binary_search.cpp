@@ -22,7 +22,7 @@ void test_binary_search()
     int a[]= {1, 5, 8, 9, 6, 7, 3, 4, 2, 0};
     int asize = sizeof(a) / sizeof(a[0]);
 
-    cout << "################# TEST BINARY SEARCH ######################## " << std::endl;
+    cout << "################## TEST BINARY SEARCH ######################## " << std::endl;
 
     cout << "\n The array is : ";
     show(a, asize);
