@@ -6,13 +6,9 @@
 //
 
 #include <iostream>
-#include "cpp_common.h"
+#include "stl_common.h"
 
 int main(int argc, const char * argv[]) {
-    //
-    // insert code here...
-    //
-    
     //
     // STL data structures
     //
@@ -25,6 +21,21 @@ int main(int argc, const char * argv[]) {
     std::cout << "################# TEST UNORDERED MAP ###################### " << std::endl;
     test_unordered_map();
 
+    std::cout << "################# TEST PAIR ############################### " << std::endl;
+    test_pair();
+    
+    std::cout << "################# TEST QUEUE ############################### " << std::endl;
+    test_queue();
+    
+    std::cout << "################# TEST STACK ############################### " << std::endl;
+    test_stack();
+    
+    std::cout << "################# TEST TUPPLE ############################### " << std::endl;
+    test_tupple();
+    
+    std::cout << "################# TEST MAP ############################### " << std::endl;
+    test_map();
+    
     //
     // STL Algorithms
     //
