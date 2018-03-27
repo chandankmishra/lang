@@ -1,3 +1,10 @@
+//
+//  list.cpp
+//  Test program to test the stl::list class
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <list>
 #include <iterator>
@@ -17,7 +24,7 @@ print_list(list <int> l)
     cout << endl;
 }
 
-int main()
+void main()
 {
     list <int> l1;
 
@@ -39,6 +46,4 @@ int main()
 
     cout << "size "<< l2.size() << " front " << l2.front() << " back " << l2.back(); 
     cout << endl;
-
-    return 0;
 }

@@ -1,6 +1,6 @@
 //
-//  main.cpp
-//  cpp
+//  vector.cpp
+//  Test program to test the stl::vector class
 //
 //  Created by Chandan Kumar Mishra on 3/27/18.
 //

@@ -1,10 +1,17 @@
+//
+//  queue.cpp
+//  Test program to test the stl::queue class
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <queue>
 #include "cpp_common.h"
  
 using namespace std;
  
-void showq(queue <int> gq)
+static void showq(queue <int> gq)
 {
     queue <int> g = gq;
     while (!g.empty())
@@ -15,7 +22,7 @@ void showq(queue <int> gq)
     cout << '\n';
 }
  
-int main()
+void test_queue()
 {
     queue <int> gquiz;
     gquiz.push(10);
@@ -31,6 +38,4 @@ int main()
     cout << "\ngquiz.pop() : ";
     gquiz.pop();
     showq(gquiz);
- 
-    return 0;
 }

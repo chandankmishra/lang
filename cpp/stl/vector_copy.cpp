@@ -1,3 +1,10 @@
+//
+//  vector_copy.cpp
+//  Test program to test the std::vector class copy functionality
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <vector>
 #include "cpp_common.h"

@@ -1,4 +1,9 @@
-//CPP program to illustrate pair STL
+//
+//  pair.cpp
+//  Test program to test the stl::pair class
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
 #include <iostream>
 #include <utility>
 #include "cpp_common.h"

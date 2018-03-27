@@ -1,6 +1,6 @@
 //
-//  binary_search.h
-//  stl
+//  binary_search.cpp
+//  Test program to test the stl::binary_search api
 //
 //  Created by Chandan Kumar Mishra on 3/27/18.
 //

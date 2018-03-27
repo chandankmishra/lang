@@ -1,3 +1,10 @@
+//
+//  sort.cpp
+//  Test program to test the stl::sort api
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <algorithm>
 #include "cpp_common.h"
@@ -11,7 +18,7 @@ void show(int a[])
     cout << endl;
 }
  
-int main()
+void test_sort()
 {
     int a[10]= {1, 5, 8, 9, 6, 7, 3, 4, 2, 0};
     cout << "\n The array before sorting is : ";
@@ -21,6 +28,4 @@ int main()
  
     cout << "\n\n The array after sorting is : ";
     show(a);
- 
-    return 0;
 }

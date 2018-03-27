@@ -1,11 +1,16 @@
-// C++ code to demonstrate tuple, get() and make_pair()
-// g++ -std=c++14 tupple.cpp
+//
+//  tupple.cpp
+//  Test program to test the std::tupple class
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include<iostream>
 #include<tuple>
 #include "cpp_common.h"
 
 using namespace std;
-int main()
+void test_tupple()
 {
     // Declaring tuple
     tuple <char, int, float> geek;
@@ -26,6 +31,4 @@ int main()
     cout << "The modified values of tuple are : ";
     cout << get<0>(geek) << " " << get<1>(geek);
     cout << " " << get<2>(geek) << endl;
- 
-    return 0;
 }

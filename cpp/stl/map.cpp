@@ -1,3 +1,10 @@
+//
+//  map.cpp
+//  Test program to test the std::map class
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <map>
 #include <iterator>
@@ -19,7 +26,7 @@ print_map (map <int, int> m)
     cout << endl;
 } 
 
-int main()
+int test_map()
 {
     map <int, int> gquiz1;        // empty map container
  

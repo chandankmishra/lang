@@ -1,10 +1,17 @@
+//
+//  stack.cpp
+//  Test program to test the std::tupple class
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <stack>
 #include "cpp_common.h"
 
 using namespace std;
 
-void showstack(stack <int> gq)
+static void showstack(stack <int> gq)
 {
     stack <int> g = gq;
     while (!g.empty())
@@ -15,7 +22,7 @@ void showstack(stack <int> gq)
     cout << '\n';
 }
 
-int main ()
+void test_stack ()
 {
     stack <int> gquiz;
     gquiz.push(10);
@@ -34,6 +41,4 @@ int main ()
     cout << "\ngquiz.pop() : ";
     gquiz.pop();
     showstack(gquiz);
-
-    return 0;
 }
