@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include "cpp_common.h"
 
 using namespace std;
 

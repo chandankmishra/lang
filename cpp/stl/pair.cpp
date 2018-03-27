@@ -1,9 +1,11 @@
 //CPP program to illustrate pair STL
 #include <iostream>
 #include <utility>
+#include "cpp_common.h"
+
 using namespace std;
  
-int main()
+void test_pair()
 {
     pair <string, int> g1;
     pair <string, int> g2("Quiz", 3);

@@ -2,6 +2,7 @@
 // g++ -std=c++14 tupple.cpp
 #include<iostream>
 #include<tuple>
+#include "cpp_common.h"
 
 using namespace std;
 int main()

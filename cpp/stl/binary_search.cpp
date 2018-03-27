@@ -1,16 +1,23 @@
+//
+//  binary_search.h
+//  stl
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
 #include <iostream>
 #include <algorithm>
+#include "cpp_common.h"
  
 using namespace std;
  
-void show(int a[], int arraysize)
+static void show(int a[], int arraysize)
 {
     for(int i = 0; i < arraysize; ++i)
         cout << '\t' << a[i];
 }
  
  
-int main()
+void test_binary_search()
 {
     int a[]= {1, 5, 8, 9, 6, 7, 3, 4, 2, 0};
     int asize = sizeof(a) / sizeof(a[0]);
@@ -33,6 +40,4 @@ int main()
     else
        cout << "\nElement not found in the array";
     cout << endl;
-
-    return 0;
 }

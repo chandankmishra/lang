@@ -1,10 +1,17 @@
-// C++ program to demonstrate functionality of unordered_map
+//
+//  unordered_map.cpp
+//  C++ program to demonstrate functionality of unordered_map
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <unordered_map>
+#include "cpp_common.h"
 
 using namespace std;
  
-int main()
+void test_unordered_map()
 {
     // Declaring umap to be of <string, double> type
     // key will be of string type and mapped value will

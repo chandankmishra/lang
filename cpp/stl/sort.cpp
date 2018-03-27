@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include "cpp_common.h"
  
 using namespace std;
  

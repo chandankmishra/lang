@@ -3,13 +3,20 @@
 //  cpp
 //
 //  Created by Chandan Kumar Mishra on 3/27/18.
-//  Copyright © 2018 Juniper Networks Inc. All rights reserved.
 //
 
 #include <iostream>
+#include "cpp_common.h"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    test_vector();
+    
+    test_vector_copy();
+    
+    test_unordered_map();
+
+    test_binary_search();
+    
     return 0;
 }

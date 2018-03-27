@@ -1,9 +1,17 @@
+//
+//  main.cpp
+//  cpp
+//
+//  Created by Chandan Kumar Mishra on 3/27/18.
+//
+
 #include <iostream>
 #include <vector>
+#include "cpp_common.h"
 
 using namespace std;
 
-int main()
+void test_vector()
 {
     vector <int> g1;
     vector <int> ::iterator i;
@@ -197,6 +205,4 @@ int main()
         v1.pop_back();
     }
     cout << endl << "isempty " << v1.empty() << endl;
-
-    return 0;
 }

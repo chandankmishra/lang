@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "cpp_common.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ print_vector(vector <int> v)
     cout << endl;
 }
 
-int main()
+void test_vector_copy()
 {
     vector <int> g1;
     vector <int> g2;
@@ -61,6 +62,4 @@ int main()
     //two more methods
     //v2.insert(v2.begin(), v1.begin(), v1.end());
     //vector<int>v2(v1.begin(),v1.end());
-    
-    return 0;
 }

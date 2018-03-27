@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <iterator>
+#include "cpp_common.h"
 
 using namespace std;
 
