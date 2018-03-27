@@ -17,6 +17,8 @@ void test_vector()
     vector <int> ::iterator i;
     vector <int> ::reverse_iterator ri;
 
+    cout << "################# TEST VECTOR ######################## " << std::endl;
+
     //push_back, begin, end, iterator
     for (int i = 0; i < 5; i++) {
         g1.push_back(i * 10);

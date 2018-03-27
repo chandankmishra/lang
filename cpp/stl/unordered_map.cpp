@@ -17,6 +17,8 @@ void test_unordered_map()
     // key will be of string type and mapped value will
     // be of double type
     unordered_map<string, double> umap;
+    
+    cout << "################# TEST UNORDERED MAP ######################## " << std::endl;
  
     // inserting values by using [] operator
     umap["PI"] = 3.14;

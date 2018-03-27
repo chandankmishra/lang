@@ -26,10 +26,12 @@ print_map (map <int, int> m)
     cout << endl;
 } 
 
-int test_map()
+void test_map()
 {
     map <int, int> gquiz1;        // empty map container
  
+    cout << "################# TEST MAP ######################## " << std::endl;
+    
     // insert elements in random order
     gquiz1.insert(pair <int, int> (4, 20));
     gquiz1[4] = 400;
@@ -98,6 +100,4 @@ int test_map()
         cout << "(" << (*it).first << ", "
             << (*it).second << ")" << endl; 
     cout << endl;
-
-    return 0;
 }

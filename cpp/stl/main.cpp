@@ -16,7 +16,12 @@ int main(int argc, const char * argv[]) {
     
     test_unordered_map();
 
+    //
+    // STL Algorithms
+    //
     test_binary_search();
+    
+    test_sort();
     
     return 0;
 }

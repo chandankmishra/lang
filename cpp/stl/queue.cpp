@@ -25,9 +25,11 @@ static void showq(queue <int> gq)
 void test_queue()
 {
     queue <int> gquiz;
+    cout << "################# TEST QUEUE ######################## " << std::endl;
+
     gquiz.push(10);
     gquiz.push(20);
- 
+
     cout << "The queue gquiz is : ";
     showq(gquiz);
  

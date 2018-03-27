@@ -14,6 +14,13 @@
 		F889025D206AC58600FAE604 /* unordered_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8890228206AC10900FAE604 /* unordered_map.cpp */; };
 		F889025E206AC5E700FAE604 /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F889022E206AC10900FAE604 /* vector.cpp */; };
 		F889025F206AC6CA00FAE604 /* vector_copy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F889022A206AC10900FAE604 /* vector_copy.cpp */; };
+		F8890260206ACA7A00FAE604 /* sort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8890232206AC10900FAE604 /* sort.cpp */; };
+		F8890261206ACA8100FAE604 /* pair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8890233206AC10900FAE604 /* pair.cpp */; };
+		F8890262206ACA8100FAE604 /* queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F889022D206AC10900FAE604 /* queue.cpp */; };
+		F8890263206ACA8100FAE604 /* stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8890230206AC10900FAE604 /* stack.cpp */; };
+		F8890264206ACA8100FAE604 /* tupple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8890231206AC10900FAE604 /* tupple.cpp */; };
+		F8890265206ACA8100FAE604 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F889022C206AC10900FAE604 /* map.cpp */; };
+		F8890266206ACA8100FAE604 /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F889022B206AC10900FAE604 /* list.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -233,6 +240,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8890261206ACA8100FAE604 /* pair.cpp in Sources */,
+				F8890262206ACA8100FAE604 /* queue.cpp in Sources */,
+				F8890263206ACA8100FAE604 /* stack.cpp in Sources */,
+				F8890264206ACA8100FAE604 /* tupple.cpp in Sources */,
+				F8890265206ACA8100FAE604 /* map.cpp in Sources */,
+				F8890266206ACA8100FAE604 /* list.cpp in Sources */,
+				F8890260206ACA7A00FAE604 /* sort.cpp in Sources */,
 				F889025E206AC5E700FAE604 /* vector.cpp in Sources */,
 				F889025F206AC6CA00FAE604 /* vector_copy.cpp in Sources */,
 				F889025D206AC58600FAE604 /* unordered_map.cpp in Sources */,

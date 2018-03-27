@@ -30,6 +30,8 @@ void test_vector_copy()
     vector <int> ::iterator i;
     vector <int> ::reverse_iterator ri;
    
+    cout << "################# TEST VECTOR COPY ######################## " << std::endl;
+
     for (int j = 0; j < 5; j++) {
         g1.push_back(j);
     } 

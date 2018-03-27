@@ -24,9 +24,11 @@ print_list(list <int> l)
     cout << endl;
 }
 
-void main()
+void test_list()
 {
     list <int> l1;
+
+    cout << "################# TEST LIST ######################## " << std::endl;
 
     for (int i = 0; i < 5; i++) {
         l1.push_back(i*2);
