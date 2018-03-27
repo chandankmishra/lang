@@ -15,8 +15,6 @@ void test_tupple()
     // Declaring tuple
     tuple <char, int, float> geek;
  
-    cout << "################# TEST TUPPLE ######################## " << std::endl;
-
     // Assigning values to tuple using make_tuple()
     geek = make_tuple('a', 10, 15.5);
  

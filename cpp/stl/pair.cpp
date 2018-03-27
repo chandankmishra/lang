@@ -17,8 +17,6 @@ void test_pair()
     pair <string, int> g3(g2);
     pair <int, int> g4(5, 10);
  
-    cout << "################# TEST PAIR ######################## " << std::endl;
-
     g1 = make_pair(string("Geeks"), 1);
     g2.first = ".com";
     g2.second = 2;

@@ -139,8 +139,6 @@
 		F8890227206AC08F00FAE604 /* stl */ = {
 			isa = PBXGroup;
 			children = (
-				F8890229206AC10900FAE604 /* README.md */,
-				F8890249206AC29600FAE604 /* main.cpp */,
 				F889022E206AC10900FAE604 /* vector.cpp */,
 				F889022A206AC10900FAE604 /* vector_copy.cpp */,
 				F8890228206AC10900FAE604 /* unordered_map.cpp */,
@@ -150,9 +148,11 @@
 				F8890231206AC10900FAE604 /* tupple.cpp */,
 				F889022C206AC10900FAE604 /* map.cpp */,
 				F889022B206AC10900FAE604 /* list.cpp */,
-				F889025A206AC3C500FAE604 /* cpp_common.h */,
+				F8890229206AC10900FAE604 /* README.md */,
 				F8890232206AC10900FAE604 /* sort.cpp */,
 				F889022F206AC10900FAE604 /* binary_search.cpp */,
+				F889025A206AC3C500FAE604 /* cpp_common.h */,
+				F8890249206AC29600FAE604 /* main.cpp */,
 			);
 			path = stl;
 			sourceTree = "<group>";

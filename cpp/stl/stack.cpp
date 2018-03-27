@@ -26,8 +26,6 @@ void test_stack ()
 {
     stack <int> gquiz;
     
-    cout << "################# TEST STACK ######################## " << std::endl;
-
     gquiz.push(10);
     gquiz.push(30);
     gquiz.push(20);

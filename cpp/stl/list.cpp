@@ -28,8 +28,6 @@ void test_list()
 {
     list <int> l1;
 
-    cout << "################# TEST LIST ######################## " << std::endl;
-
     for (int i = 0; i < 5; i++) {
         l1.push_back(i*2);
         l1.push_front(10+i*3);

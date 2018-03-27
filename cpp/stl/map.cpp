@@ -29,9 +29,7 @@ print_map (map <int, int> m)
 void test_map()
 {
     map <int, int> gquiz1;        // empty map container
- 
-    cout << "################# TEST MAP ######################## " << std::endl;
-    
+     
     // insert elements in random order
     gquiz1.insert(pair <int, int> (4, 20));
     gquiz1[4] = 400;

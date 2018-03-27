@@ -21,9 +21,7 @@ void show(int a[])
 void test_sort()
 {
     int a[10]= {1, 5, 8, 9, 6, 7, 3, 4, 2, 0};
-    
-    cout << "################# TEST SORT ######################## " << std::endl;
-    
+        
     cout << "\n The array before sorting is : ";
     show(a);
  
