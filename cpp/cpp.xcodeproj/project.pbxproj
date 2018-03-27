@@ -67,6 +67,7 @@
 		F889024D206AC2AE00FAE604 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F8890258206AC32400FAE604 /* stl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = stl; sourceTree = BUILT_PRODUCTS_DIR; };
 		F889025A206AC3C500FAE604 /* cpp_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpp_common.h; sourceTree = "<group>"; };
+		F8890267206ACC5D00FAE604 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +91,7 @@
 		F8890206206ABE1500FAE604 = {
 			isa = PBXGroup;
 			children = (
+				F8890267206ACC5D00FAE604 /* README.md */,
 				F8890227206AC08F00FAE604 /* stl */,
 				F889021F206ABFBD00FAE604 /* lang */,
 				F889021E206ABFB200FAE604 /* problems */,
