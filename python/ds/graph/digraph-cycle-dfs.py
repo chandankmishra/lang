@@ -7,8 +7,7 @@ def isCycleUtilDfs(graph, v, visited, recstack):
 
     for neighbour in graph[v]:
         if neighbour not in visited:
-            if isCycleUtilDfs(graph, neighbour, visited, recstack):
-                return True
+            return isCycleUtilDfs(graph, neighbour, visited, recstack):
         elif neighbour in recstack:
             return True
     if neighbour in recstack:
