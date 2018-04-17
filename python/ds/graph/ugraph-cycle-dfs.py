@@ -1,34 +1,40 @@
-def isCycleUtilDfs(graph, v, visited, parent):
-    visited.add(v)
-    #print (v, ",", end='')
+from collections import defaultdict
 
-    for neighbour in graph[v]:
-        if neighbour not in visited:
-            if isCycleUtilDfs(graph, neighbour, visited, v):
+class Graph:
+    def __init__(self, V):
+        self.V = V
+        self.graph = defaultdict(list)
+
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
+        self.graph[v].append(u)
+
+    def isCycleUtilDfs(self, v, visited, parent):
+        visited.add(v)
+        #print (v, ",", end='')
+
+        for neighbour in self.graph[v]:
+            if neighbour not in visited:
+                if self.isCycleUtilDfs(neighbour, visited, v):
+                    return True
+            elif parent != neighbour:
                 return True
-        elif parent != neighbour:
-            return True
-    return False
+        return False
 
+    def isCycleDfs(self, v):
+        visited = set()
+        return self.isCycleUtilDfs(v, visited, -1)
 
-def isCycleDfs(graph, v):
-    visited = set()
-    return isCycleUtilDfs(graph, v, visited, -1)
+graph = Graph(5)
+graph.addEdge('A', 'B')
+graph.addEdge('A', 'C')
+graph.addEdge('A', 'D')
+graph.addEdge('B', 'E')
 
+# Check for the cycle
+print (graph.isCycleDfs('A'))
 
-# graph = {'A': ['B', 'C', 'E'],
-#          'B': ['C', 'E'],
-#          'C': ['A'],
-#          'D': ['C'],
-#          'E': ['F'],
-#          'F': ['C']}
+# Now create the cycle
+graph.addEdge('C', 'D')
+print (graph.isCycleDfs('A'))
 
-graph = {'A': ['B'],
-         'B': ['E'],
-         'C': ['D'],
-         'D': ['C'],
-         'E': ['F'],
-         'F': ['C']}
-
-print (graph)
-print (isCycleDfs(graph, 'A'))

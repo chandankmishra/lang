@@ -1,40 +1,44 @@
-def isCycleUtilDfs(graph, v, visited, recstack):
-    visited.add(v)
-    recstack.add(v)
+from collections import defaultdict
 
-    if v not in graph:
+class Graph:
+    def __init__(self, V):
+        self.V = V
+        self.graph = defaultdict(list)
+
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
+
+    def isCycleUtilDfs(self, v, visited, recstack):
+        visited.add(v)
+        recstack.add(v)
+
+        if v not in self.graph:
+            return False
+
+        for neighbour in self.graph[v]:
+            if neighbour not in visited:
+                if self.isCycleUtilDfs(neighbour, visited, recstack):
+                    return True
+            elif neighbour in recstack:
+                return True
+        if neighbour in recstack: recstack.remove(neighbour)
         return False
 
-    for neighbour in graph[v]:
-        if neighbour not in visited:
-            return isCycleUtilDfs(graph, neighbour, visited, recstack):
-        elif neighbour in recstack:
-            return True
-    if neighbour in recstack:
-        recstack.remove(neighbour)
-    return False
 
+    def isCycleDfs(self):
+        visited = set()
+        recstack = set()
+        for v in self.graph:
+            if self.isCycleUtilDfs(v, visited, recstack):
+                return True
+        return False
 
-def isCycleDfs(graph):
-    visited = set()
-    recstack = set()
-    for i in graph:
-        return isCycleUtilDfs(graph, i, visited, recstack)
+graph = Graph(5)
+graph.addEdge('A', 'B')
+graph.addEdge('A', 'C')
+graph.addEdge('A', 'D')
+print (graph.isCycleDfs())
 
-
-graph1 = {'A': ['B', 'C', 'E'],
-          'B': ['C', 'E'],
-          'C': ['A'],
-          'D': ['C'],
-          'E': ['F'],
-          'F': ['C']}
-
-graph2 = {'A': ['B'],
-          'B': ['E'],
-          'C': ['D'],
-          #'D': ['E'],
-          'E': ['F'],
-          'F': ['C']}
-
-print (isCycleDfs(graph1))
-print (isCycleDfs(graph2))
+# Create cycle
+graph.addEdge('E', 'A')
+print (graph.isCycleDfs())
