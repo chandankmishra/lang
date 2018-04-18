@@ -41,9 +41,6 @@ graph.addEdge('A', 'C')
 graph.addEdge('A', 'D')
 graph.addEdge('E', 'A')
 
-#for v in graph.graph:
-#    print (v, graph.graph[v])
-
 # Check cycle
 print (graph.isCycleDfs())
 

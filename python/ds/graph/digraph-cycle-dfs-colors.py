@@ -27,7 +27,7 @@ class Graph:
 
 
     def isCycleDfs(self):
-        color = {}
+        color = defaultdict() 
         for v in self.graph:
             color[v] = "WHITE"
 
@@ -44,6 +44,8 @@ graph.addEdge('A', 'B')
 graph.addEdge('A', 'C')
 graph.addEdge('A', 'D')
 graph.addEdge('E', 'A')
+
+# Check cycle
 print (graph.isCycleDfs())
 
 # Create cycle
