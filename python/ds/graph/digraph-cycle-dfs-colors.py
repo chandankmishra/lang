@@ -1,47 +1,51 @@
-def isCycleUtilDfs(graph, v, color):
-    color[v] = "GRAY"
+from collections import defaultdict
 
-    if v not in graph:
+class Graph:
+    def __init__(self, V):
+        self.V = V
+        self.graph = defaultdict(list)
+
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
+
+    def isCycleUtilDfs(self, v, color):
+        color[v] = "GRAY"
+
+        if v not in self.graph:
+            return False
+
+        for neighbour in self.graph[v]:
+            if neighbour not in color:
+                continue
+            if color[neighbour] == "GRAY":
+                return True
+            if color[neighbour] == "WHITE" and self.isCycleUtilDfs(neighbour, color):
+                return True
+
+        color[v] = "BLACK"
         return False
 
-    for neighbour in graph[v]:
-        if neighbour not in color:
-            continue
-        if color[neighbour] == "GRAY":
-            return True
-        if color[neighbour] == "WHITE" and isCycleUtilDfs(graph, neighbour, color):
-            return True
 
-    color[v] = "BLACK"
-    return False
+    def isCycleDfs(self):
+        color = {}
+        for v in self.graph:
+            color[v] = "WHITE"
 
+        for v in self.graph:
+            if color[v] == "WHITE":
+                if self.isCycleUtilDfs(v, color) is True:
+                    return True
+        return False
 
-def isCycleDfs(graph):
-    vLen = len(graph)
-    color = {}
-    for i in graph:
-        color[i] = "WHITE"
+# Driver Program
+graph = Graph(5)
 
-    for i in graph:
-        if color[i] == "WHITE":
-            if isCycleUtilDfs(graph, i, color) is True:
-                return True
-    return False
+graph.addEdge('A', 'B')
+graph.addEdge('A', 'C')
+graph.addEdge('A', 'D')
+graph.addEdge('E', 'A')
+print (graph.isCycleDfs())
 
-
-graph1 = {'A': ['B', 'C', 'E'],
-          'B': ['C', 'E'],
-          'C': ['A'],
-          'D': ['C'],
-          'E': ['F'],
-          'F': ['C']}
-
-graph2 = {'A': ['B'],
-          'B': ['E'],
-          'C': ['D'],
-          #'D': ['E'],
-          'E': ['F'],
-          'F': ['C']}
-
-print (isCycleDfs(graph1))
-print (isCycleDfs(graph2))
+# Create cycle
+graph.addEdge('B', 'E')
+print (graph.isCycleDfs())

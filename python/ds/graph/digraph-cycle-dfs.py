@@ -21,7 +21,7 @@ class Graph:
                     return True
             elif neighbour in recstack:
                 return True
-        if neighbour in recstack: recstack.remove(neighbour)
+        if v in recstack: recstack.remove(v)
         return False
 
 
@@ -33,12 +33,20 @@ class Graph:
                 return True
         return False
 
+# Driver Program
 graph = Graph(5)
+
 graph.addEdge('A', 'B')
 graph.addEdge('A', 'C')
 graph.addEdge('A', 'D')
+graph.addEdge('E', 'A')
+
+#for v in graph.graph:
+#    print (v, graph.graph[v])
+
+# Check cycle
 print (graph.isCycleDfs())
 
 # Create cycle
-graph.addEdge('E', 'A')
+graph.addEdge('B', 'E')
 print (graph.isCycleDfs())
