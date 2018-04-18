@@ -1,51 +1,44 @@
-    def find_parent(parent, i):
-        if i not in parent:
-            return i
+from collections import defaultdict
+
+class Graph:
+    def __init__(self, V):
+        self.V = V
+        self.graph = defaultdict(list)
+
+    def addEdge(self,u,v):
+        self.graph[u].append(v)
+
+    def find_parent(self, parent,i):
         if parent[i] == -1:
             return i
-        if parent[i] != -1:
-            return find_parent(parent, parent[i])
+        if parent[i]!= -1:
+            return self.find_parent(parent,parent[i])
 
-    # A utility function to do union of two subsets
-
-    def union(parent, x, y):
-        x_set = find_parent(parent, x)
-        y_set = find_parent(parent, y)
+    def union(self,parent,x,y):
+        x_set = self.find_parent(parent, x)
+        y_set = self.find_parent(parent, y)
         parent[x_set] = y_set
 
-    # The main function to check whether a given graph
-    # contains cycle or not
-
-    def isCyclicUnionFind(graph):
-        # Allocate memory for creating V subsets and
-        # Initialize all subsets as single element sets
-        parent = {}
-        for i in graph:
-            parent[i] = -1
-
-        for i in graph:
-            for j in graph[i]:
-                x = find_parent(parent, i)
-                y = find_parent(parent, j)
-                print (x, y)
-                if x == y:
-                    return True
-                union(parent, x, y)
+    def isCyclic(self):
+        parent = [-1]*(self.V)
+        # Iterate through all edges of graph, find subset of both
+        # vertices of every edge, if both subsets are same, then
+        # there is cycle in graph.
+        for i in self.graph:
+            for j in self.graph[i]:
+                x = self.find_parent(parent, i)
+                y = self.find_parent(parent, j)
+                if x == y: return True
+                self.union(parent,x,y)
         return False
 
-    graph1 = {'A': ['B', 'C', 'E'],
-              'B': ['C', 'E'],
-              'C': ['A'],
-              'D': ['C'],
-              'E': ['F'],
-              'F': ['C']}
 
-    graph2 = {'A': ['B'],
-              'B': ['E'],
-              'C': ['D'],
-              #'D': ['C'],
-              'E': ['F'],
-              'F': ['C']}
-
-    print (isCyclicUnionFind(graph1))
-    print (isCyclicUnionFind(graph2))
+# Create a graph given in the above diagram
+g = Graph(5)
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(1, 3)
+g.addEdge(1, 4)
+print (g.isCyclic())
+g.addEdge(3, 4)
+print (g.isCyclic())

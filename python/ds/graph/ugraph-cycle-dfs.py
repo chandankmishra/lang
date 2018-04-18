@@ -21,9 +21,13 @@ class Graph:
                 return True
         return False
 
-    def isCycleDfs(self, v):
+    def isCycleDfs(self):
         visited = set()
-        return self.isCycleUtilDfs(v, visited, -1)
+        for v in self.graph:
+            if v not in visited:
+                if self.isCycleUtilDfs(v, visited, -1):
+                    return True
+        return False
 
 graph = Graph(5)
 graph.addEdge('A', 'B')
@@ -32,9 +36,9 @@ graph.addEdge('A', 'D')
 graph.addEdge('B', 'E')
 
 # Check for the cycle
-print (graph.isCycleDfs('A'))
+print (graph.isCycleDfs())
 
 # Now create the cycle
 graph.addEdge('C', 'D')
-print (graph.isCycleDfs('A'))
+print (graph.isCycleDfs())
 
