@@ -1,159 +1,81 @@
-# Python program for delete operation
-# in a Trie
-
-
-class TrieNode(object):
-    '''
-    Trie node class
-    '''
-
+class TrieNode:
     def __init__(self):
         self.children = [None] * 26
-
-        # non zero if leaf
         self.value = 0
 
     def leafNode(self):
-        '''
-        Check if node is leaf node or not
-        '''
-        return self.value != 0
+        return self and self.value != 0
 
-    def isItFreeNode(self):
-        '''
-        If node have no children then it is free
-        If node have children return False else True
-        '''
+    def freeNode(self):
         for c in self.children:
-            if c:
-                return False
+            if c: return False
         return True
 
-
-class Trie(object):
-    '''
-    Trie data structure class
-    '''
-
+class Trie:
     def __init__(self):
+        self.count = 0
         self.root = self.getNode()
 
-        # keep count on number of keys
-        # inserted in trie
-        self.count = 0
-
-    def _Index(self, ch):
-        '''
-        private helper function
-        Converts key current character into index
-        use only 'a' through 'z' and lower case
-        '''
-        return ord(ch) - ord('a')
-
     def getNode(self):
-        '''
-        Returns new trie node (initialized to NULLs)
-        '''
-        return TrieNode()
+        return TrieNode();
 
-    def insert(self, key):
-        '''
-        If not present, inserts key into trie
-        If the key is prefix of trie node,mark
-        it as leaf(non zero)
-        '''
+    def _index(self, ch):
+        return (ord(ch) - ord('a'))
+
+    def insert(self, key): #return nothing
         length = len(key)
-        pCrawl = self.root
+        pnode = self.root
         self.count += 1
+        for level, char in enumerate(key):
+            index = self._index(char)
+            if pnode.children[index] == None:
+                pnode.children[index] = self.getNode()
+            pnode = pnode.children[index]
+        pnode.value = self.count
 
-        for level in range(length):
-            index = self._Index(key[level])
-
-            if pCrawl.children[index]:
-                # skip current node
-                pCrawl = pCrawl.children[index]
-            else:
-                # add new node
-                pCrawl.children[index] = self.getNode()
-                pCrawl = pCrawl.children[index]
-
-        # mark last node as leaf (non zero)
-        pCrawl.value = self.count
-
-    def search(self, key):
-        '''
-        Search key in the trie
-        Returns true if key presents in trie, else false
-        '''
+    def search(self, key): #return True/False
         length = len(key)
-        pCrawl = self.root
-        for level in range(length):
-            index = self._Index(key[level])
-            if not pCrawl.children[index]:
+        pnode = self.root
+        for level, char in enumerate(key):
+            index = self._index(char)
+            if not pnode.children[index]:
                 return False
-            pCrawl = pCrawl.children[index]
+            pnode = pnode.children[index]
+        return pnode.leafNode()
 
-        return pCrawl != None and pCrawl.value != 0
-
-    def _deleteHelper(self, pNode, key, level, length):
-        '''
-        Helper function for deleting key from trie
-        '''
-        if pNode:
-            # Base case
-            if level == length:
-                if pNode.value:
-                    # unmark leaf node
-                    pNode.value = 0
-
-                # if empty, node to be deleted
-                return pNode.isItFreeNode()
-
-            # recursive case
-            else:
-                index = self._Index(key[level])
-                if self._deleteHelper(pNode.children[index],
-                                      key, level + 1, length):
-
-                    # last node marked,delete it
-                    del pNode.children[index]
-
-                    # recursively climb up and delete
-                    # eligible nodes
-                    return (not pNode.leafNode() and
-                            pNode.isItFreeNode())
-
+    def _deleteHelper(self, pnode, key, level):
+        length = len(key)
+        if level == length:
+            pnode.value = 0
+            return pnode.freeNode()
+        else:
+            index = self._index(key[level])
+            if self._deleteHelper(pnode.children[index], key, level+1):
+                del pnode.children[index]
+                return (not pnode.leafNode() and pnode.freeNode())
         return False
 
-    def deleteKey(self, key):
-        '''
-        Delete key from trie
-        '''
-        length = len(key)
-        if length > 0:
-            self._deleteHelper(self.root, key, 0, length)
+    def deleteKey(self, key): #return nothing
+        if len(key) > 0: self._deleteHelper(self.root, key, 0)
 
+    def displayTrie(self, pnode):
+        print (pnode.children)
+        for index in range(26):
+            if not pnode.children[index]:
+                continue
+            self.displayTrie(pnode.children[index])
 
 def main():
-    keys = ["she", "sells", "sea", "shore", "the", "by", "sheer"]
+    keys = ["apple", "she", "sells", "sea", "shore", "the", "by", "sheer",
+            "are", "area", "base", "cat", "cater", "children", "basement",
+            "a", "aaala"]
     trie = Trie()
-    for key in keys:
-        trie.insert(key)
-
-    print("{} {}".format(keys[0],
-                         "Present in trie" if trie.search(keys[0])
-                         else "Not present in trie"))
-
+    for key in keys: trie.insert(key)
+    #trie.displayTrie(trie.root)
+    patten = "apple"
+    print("{} {}".format(patten, "Present in trie" if trie.search(patten) else "Not present in trie"))
     trie.deleteKey(keys[0])
-
-    print("{} {}".format(keys[0],
-                         "Present in trie" if trie.search(keys[0])
-                         else "Not present in trie"))
-
-    print("{} {}".format(keys[6],
-                         "Present in trie" if trie.search(keys[6])
-                         else "Not present in trie"))
-
+    print("{} {}".format(patten, "Present in trie" if trie.search(patten) else "Not present in trie"))
 
 if __name__ == '__main__':
     main()
