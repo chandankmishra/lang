@@ -8,41 +8,45 @@ class Graph:
         self.graph[u].append(v)
  
     def BFS(self, s):
-        visited = [False]*(len(self.graph))
-        queue = []
+        visited = set()
+        queue = list()
         queue.append(s)
-        visited[s] = True
+        visited.add(s)
  
         while queue:
             s = queue.pop(0)
             print (s,",", end='')
             for i in self.graph[s]:
-                if visited[i] == False:
+                if i not in visited:
                     queue.append(i)
-                    visited[i] = True
+                    visited.add(i)
 
     def DFSUtil(self, s, visited):
-        visited[s] = True
+        visited.add(s)
         print (s,",", end='')
         for i in self.graph[s]:
-            if visited[i] is False:
+            if i not in visited:
                 self.DFSUtil(i, visited)
         
     def DFS(self, s):
-        visited = [False]*(len(self.graph))
+        visited = set()
         self.DFSUtil(s, visited)
 
+# Test Program
 g = Graph()
-g.addEdge(0, 1)
-g.addEdge(0, 2)
-g.addEdge(1, 2)
-g.addEdge(2, 0)
-g.addEdge(2, 3)
-g.addEdge(3, 3)
-print ("Breadth First Traversal (from 2)")
-g.BFS(2)
-print ("\nDepth First Traversal (from 2)")
-g.DFS(2)
+
+g.addEdge('A', 'B')
+g.addEdge('A', 'C')
+g.addEdge('B', 'C')
+g.addEdge('C', 'A')
+g.addEdge('C', 'D')
+g.addEdge('D', 'D')
+
+print ("Breadth First Traversal (from C)")
+g.BFS('C')
+print ("")
+print ("Depth First Traversal (from C)")
+g.DFS('C')
 print ("")
 
 #end of file
