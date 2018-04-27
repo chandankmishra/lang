@@ -1,15 +1,17 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 from collections import defaultdict
 import heapq
 import re
+
 
 def get_ip_addr(iphash, nstr):
     pattern = re.compile("[0-2]?\d?\d[.][0-2]?\d?\d[.][0-2]?\d?\d[.][0-2]?\d?\d")
     matches = pattern.findall(nstr)
     for match in matches:
         iphash[match] += 1
+
 
 def top_k_most_frequent(arr, k):
     iphash = defaultdict(int)
@@ -29,15 +31,17 @@ def top_k_most_frequent(arr, k):
             heapq.heappop(res)
     print (res)
 
+    return [s[1] for s in heapq.nlargest(k, res)]
     # build a list from the hash table.
-    result = list()
-    while res:
-        var = heapq.heappop(res)
-        result.append(var[1])
-    result.reverse()
-    return result
+    # result = list()
+    # while res:
+    #     var = heapq.heappop(res)
+    #     result.append(var[1])
+    # result.reverse()
+    # return result
 
-nstr= """0.0.0.0/8    0.0.0.0 –
+
+nstr = """0.0.0.0/8    0.0.0.0 –
     0.255.255.255   16,777,216  Software    Used for broadcast messages to the current ("this")[1]
     10.0.0.0/8  10.0.0.0 –
     10.0.0.0/8  10.0.0.0 –
@@ -75,6 +79,7 @@ nstr= """0.0.0.0/8    0.0.0.0 –
     192.168.0.0/16  192.168.0.0 –
     192.168.255.255 65,536  Private network Used for local communications within a private network[2]
     198.18.0.0/15   198.18.0.0 –
+    198.18.0.0/15   198.18.0.1 –
     198.18.0.0/15   198.18.0.0 –
     198.18.0.0/15   198.18.0.0 –
     198.19.255.255  131,072 Private network Used for testing of inter-network communications between two separate subnets[9]
