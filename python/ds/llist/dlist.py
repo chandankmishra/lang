@@ -35,12 +35,13 @@ class DList:
             raise KeyError('ther is no entry to remove.')
 
         ret_key = self.tail.data
+        print ("dlist", ret_key)
 
         # dlist has only one entry
         if self.tail.prev is None:
             self.tail = None
             self.head = None 
-            return
+            return ret_key
         
         # dlist has more than one entry.
         prev = self.tail.prev
