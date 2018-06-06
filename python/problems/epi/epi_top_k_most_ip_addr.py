@@ -6,32 +6,35 @@ import heapq
 import re
 
 
-def get_ip_addr(iphash, nstr):
+def get_ip_addr(ip_hash, nstr):
     pattern = re.compile("[0-2]?\d?\d[.][0-2]?\d?\d[.][0-2]?\d?\d[.][0-2]?\d?\d")
     matches = pattern.findall(nstr)
     for match in matches:
-        iphash[match] += 1
+        ip_hash[match] += 1
 
 
 def top_k_most_frequent(arr, k):
-    iphash = defaultdict(int)
+    ip_hash = defaultdict(int)
     res = list()
 
     nstr = ""
     for i in arr:
         nstr += i
         if i == '\n':
-            get_ip_addr(iphash, nstr)
+            get_ip_addr(ip_hash, nstr)
             nstr = ""
 
     # build a minheap with (freq, ip) tupple as key
-    for key, ip in enumerate(iphash):
-        heapq.heappush(res, (iphash[ip], ip))
+    for key, ip in enumerate(ip_hash):
+        heapq.heappush(res, (ip_hash[ip], ip))
         if len(res) > k:
             heapq.heappop(res)
     print (res)
 
-    return [s[1] for s in heapq.nlargest(k, res)]
+    # method 1 - using heapq.nlargest api
+    #return [s[1] for s in heapq.nlargest(k, res)]
+
+    # method 2 - hash table and reverse
     # build a list from the hash table.
     # result = list()
     # while res:
@@ -40,6 +43,13 @@ def top_k_most_frequent(arr, k):
     # result.reverse()
     # return result
 
+    # method 3 - without reverse
+    # build a list from the hash table.
+    result = list()
+    while res:
+        var = heapq.heappop(res)
+        result.insert(0, var[1])
+    return result
 
 nstr = """0.0.0.0/8    0.0.0.0 –
     0.255.255.255   16,777,216  Software    Used for broadcast messages to the current ("this")[1]
