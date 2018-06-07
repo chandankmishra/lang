@@ -7,7 +7,7 @@ def merge_k_sorted_arrays(narr, k, n):
         sorted_array_iter.append(iter(arr))
 
     heap = []
-    for i in range(k):
+    for i, val in enumerate(narr):
         element = next(sorted_array_iter[i], None)
         if element is not None:
             heapq.heappush(heap, (element, i))
