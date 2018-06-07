@@ -5,18 +5,19 @@ import heapq
 
 
 def get_top_k(narr, k):
-    heap, output = [], []
-    for i, val in enumerate(narr):
+    heap, output, i = [], [], 0
+    for val narr:
         if val in heap:  # how to avoid scanning of heap?
             continue
         if i < k:
             heapq.heappush(heap, val)
         else:
             heapq.heappushpop(heap, val)
+        i += 1
 
     # Time Complexity O(k * k)
-    for val in heap:
-        output.append(val)
+    while heap:
+        output.append(heapq.heappop(heap))
     return output
 
 
