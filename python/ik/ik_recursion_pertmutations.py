@@ -14,8 +14,8 @@ def pertmutation(nlst, start):
         nlst[start], nlst[i] = nlst[i], nlst[start]
 
 
-nlst = [1, 2, 3, 4]
-#pertmutation(nlst, 0)
+nlst = [1, 2, 3]
+pertmutation(nlst, 0)
 
 ###########################################################
 # Problem: There is an array with half even and half odd integers.
