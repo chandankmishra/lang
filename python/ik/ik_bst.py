@@ -73,11 +73,15 @@ root = None
 root = insert_node(root, 20)
 root = insert_node(root, 10)
 root = insert_node(root, 30)
+root = insert_node(root, 40)
 
 inorder(root)
 print('')
 preorder(root)
 print('')
+postorder(root)
+print('')
+root = delete_node(root, 40)
 postorder(root)
 print('')
 
