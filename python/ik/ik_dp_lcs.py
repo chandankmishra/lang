@@ -14,7 +14,7 @@ def lcs(a, b):
                 dp[ai][bi] = dp[ai-1][bi-1]+1
             else:
                 dp[ai][bi] = max(dp[ai-1][bi], dp[ai][bi-1])
-    return dp[alen][blen]
+    return dp[-1][-1]
 
 
 a = "bcc"
