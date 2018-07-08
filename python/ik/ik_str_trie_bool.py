@@ -13,8 +13,8 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = TrieNode()
-    # Insert a word
 
+    # Insert a word
     def insert(self, w):
         current_node = self.root
         for ch in w:
@@ -47,7 +47,6 @@ class Trie:
     '''
     #1 Search for a word in Trie. Return True/False
     '''
-
     def search(self, w):
         current_node = self.root
         for ch in w:
@@ -59,7 +58,6 @@ class Trie:
     '''
     #2 Do LPM search for a word. Return the maximum length word matching the input.
     '''
-
     def lpm_search(self, w):
         current_node = self.root
         idx = -1
@@ -75,7 +73,6 @@ class Trie:
     #3 Do the prefix match and return all matching words
     # This problem is also called Auto Complete
     '''
-
     def _collect_words(self, node, path, output):
         if node.end_of_word:
             output.append("".join(path))
