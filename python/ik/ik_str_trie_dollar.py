@@ -1,20 +1,22 @@
 class TrieNode:
     def __init__(self):
         self.children = {}
-        self.end_of_word = False
 
     def freeNode(self):
         for ch in self.children:
-            if ch:
+            if self.children[ch]:
                 return False
         return True
+
+    def leafNode(self):
+        return self.children and '$' in self.children
 
 
 class Trie:
     def __init__(self):
         self.root = TrieNode()
-    # Insert a word
 
+    # Insert a word
     def insert(self, w):
         current_node = self.root
         for ch in w:
@@ -22,21 +24,21 @@ class Trie:
                 node = TrieNode()
                 current_node.children[ch] = node
             current_node = current_node.children[ch]
-        current_node.end_of_word = True
+        current_node.children['$'] = TrieNode()
 
-    # Remove a word
     def _deleteHelper(self, current_node, w, level):
         length = len(w)
         if level == length:
-            current_node.end_of_word = False
+            del current_node.children['$']
             return current_node.freeNode()
         else:
             for ch in current_node.children:
                 if self._deleteHelper(current_node.children[ch], w, level + 1):
                     del current_node.children[ch]
-                return (not current_node.end_of_word and current_node.freeNode())
+                return (not current_node.leafNode() and current_node.freeNode())
         return False
 
+    # Remove a word
     def delete(self, w):  # return nothing
         if len(w) > 0:
             self._deleteHelper(self.root, w, 0)
@@ -54,7 +56,7 @@ class Trie:
             if ch not in current_node.children:
                 return False
             current_node = current_node.children[ch]
-        return current_node.end_of_word
+        return current_node.leafNode()
 
     '''
     #2 Do LPM search for a word. Return the maximum length word matching the input.
@@ -67,7 +69,7 @@ class Trie:
             if ch not in current_node.children:
                 break
             current_node = current_node.children[ch]
-            if current_node.end_of_word:
+            if '$' in current_node.children:
                 idx = i + 1
         return "none" if idx == -1 else w[:idx]
 
@@ -77,7 +79,10 @@ class Trie:
     '''
 
     def _collect_words(self, node, path, output):
-        if node.end_of_word:
+        if not node:
+            return
+
+        if '$' in node.children:
             output.append("".join(path))
 
         for parent, child in node.children.items():
@@ -101,11 +106,26 @@ class Trie:
 keys = ["apple", "she", "sells", "sea", "shore", "the", "by", "sheer",
         "are", "area", "base", "cat", "cater", "children", "basement", "apples",
         "a", "aaala"]
+# Build Trie
 trie = Trie()
 for key in keys:
     trie.insert(key)
 
-print(trie.prefix_match('app'))
+# Search for words
+print("#1 Search for words:")
+print(trie.search('app'))
+print(trie.search('she'))
+
+print("#2 Delete and verify:")
+print(trie.search('apple'))
+print(trie.prefix_match('a'))
 trie.delete('apple')
-print(trie.prefix_match(''))
-print(trie.lpm_search("caters"))
+print(trie.prefix_match('a'))
+print(trie.search('apple'))
+
+print("#3 Get Longest Prefix Search (LPM):")
+print("areas =>", trie.lpm_search("areas"))
+print("basements =>", trie.lpm_search("basements"))
+
+print("#4 Get all matching words with a Prefix:")
+print(trie.prefix_match('are'))
