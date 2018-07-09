@@ -1,3 +1,6 @@
+'''
+Find longest repeating substring in a given string
+'''
 class TrieNode:
     def __init__(self):
         self.children = {}
@@ -53,8 +56,9 @@ class Trie:
 
 
 # Input
-text = "missiissippi"  # ans should be 4 (issi)
+text = "missiissippi"  # ans should be 4 (issi) but 3 is coming !!
 # text = "aaaaacaaaaad" # ans should be 5 (aaaaa)
+
 
 # Build Trie
 trie = Trie()
