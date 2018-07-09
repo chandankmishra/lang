@@ -1,6 +1,8 @@
 '''
 Find longest repeating substring in a given string
 '''
+
+
 class TrieNode:
     def __init__(self):
         self.children = {}
@@ -37,10 +39,11 @@ class Trie:
     def _helper(self, node, level):
         if not node or not node.children:
             return 0
-        if node.leafNode():
-            return 1
 
         dollar_cnt = 0
+        if node.leafNode():
+            dollar_cnt = 1
+
         for child in node.children:
             dollar_cnt += self._helper(node.children[child], level + 1)
 
@@ -55,15 +58,14 @@ class Trie:
         return self.max_level
 
 
-# Input
-text = "missiissippi"  # ans should be 4 (issi) but 3 is coming !!
-# text = "aaaaacaaaaad" # ans should be 5 (aaaaa)
-
-
-# Build Trie
+text = "missiissippi"
 trie = Trie()
 trie.build_trie(text)
 print("Text is ", text)
+print(trie.longest_repeated_substring())
 
-# Find longest repeating substring
+text = "aaaaacaaaaad"
+trie = Trie()
+trie.build_trie(text)
+print("Text is ", text)
 print(trie.longest_repeated_substring())
