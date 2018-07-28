@@ -1,18 +1,20 @@
 from abc import ABC, abstractmethod
 
 
-class File:
+class CompressClient:
     def __init__(self):
         self.strategy = None
 
     def compress(self):
         self.strategy.compress()
 
+# Abstract Interface
+
 
 class StategyPattern(ABC):
     @abstractmethod
     def compress(self):
-        raise ImplementationError
+        pass
 
 
 class ZipStrategy(StategyPattern):
@@ -21,14 +23,11 @@ class ZipStrategy(StategyPattern):
 
 
 class RarStrategy(StategyPattern):
-    def __init__(self):
-        pass
-
     def compress(self):
         print ("Compress with RAR")
 
 
-f = File()
+f = CompressClient()
 f.strategy = ZipStrategy()
 f.compress()
 f.strategy = RarStrategy()

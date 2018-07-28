@@ -41,6 +41,7 @@ class MenuItem(MenuComponent):
     def render(self, prefix):
         super().render(prefix)
 
+
 # Client
 if __name__ == '__main__':
     menuitem1 = MenuItem("New File")

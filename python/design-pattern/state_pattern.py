@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+# State abstract class
+
 
 class RingState(ABC):
     @abstractmethod
@@ -45,28 +47,37 @@ class SilentState(RingState):
     def nextStateVolumeDown(self):
         return self
 
+# Context Class - single interface to the outside world
+
 
 class Phone:
     def __init__(self):
-        self.s = SoundState()
+        self.state = SoundState()
 
     def incomingCall(self):
-        self.s.ring()
+        print ("Incoming call")
+        self.state.ring()
 
     def volumeUp(self):
-        self.s = self.s.nextStateVolumeUp()
+        print ("Incrase volume")
+        self.state = self.state.nextStateVolumeUp()
 
     def volumeDown(self):
-        self.s = self.s.nextStateVolumeDown()
+        print ("Decrease volume")
+        self.state = self.state.nextStateVolumeDown()
 
 
 p = Phone()
 p.incomingCall()
+print ('-' * 50)
 p.volumeUp()
 p.incomingCall()
+print ('-' * 50)
 p.volumeDown()
 p.incomingCall()
+print ('-' * 50)
 p.volumeDown()
 p.incomingCall()
+print ('-' * 50)
 p.volumeUp()
 p.incomingCall()
