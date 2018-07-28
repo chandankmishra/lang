@@ -1,26 +1,31 @@
-class Greeter:
+class GreeterInterface:
     def greet(self):
         pass
 
 
-class RealGreeter(Greeter):
+class RealGreeter(GreeterInterface):
     def greet(self):
-        return ("Hi there")
+        return ("The real thing is dealing with the request")
 
 
-class ProxyGreeter(Greeter):
-    def __init__(self):
-        self.greeter = None
+class ProxyGreeter(GreeterInterface):
+    def __init__(self, real_greeter):
+        self.greeter = real_greeter
 
     def greet(self):
         # 1 Lookup greeter object on network and send request to call greet() method
         # 2 Check if the user is authorized to access
         # 3 Cache content
-        if self.greeter is None:
-            self.greeter = RealGreeter()
+        print ("Proxy received the request.")
         return self.greeter.greet()
 
 
-greeter = ProxyGreeter()
-print(greeter.greet())
-print(greeter.greet())
+# Client
+if __name__ == '__main__':
+    print ("Direct Request =>")
+    real = RealGreeter()
+    print(real.greet())
+
+    print ("Request via Proxy =>")
+    proxy = ProxyGreeter(real)
+    print(proxy.greet())
