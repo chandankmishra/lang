@@ -7,7 +7,6 @@ lock = threading.Lock()
 read_cv = threading.Condition(lock)
 write_cv = threading.Condition(lock)
 item = 0
-writer = 0
 writing = 0
 reading = 0
 
@@ -16,7 +15,7 @@ def read(thr_no):
     while True:
         print (f"reader {thr_no} is waiting...")
         read_cv.acquire()
-        while writer:
+        while writing:
             read_cv.wait()
 
         reading += 1
@@ -33,12 +32,9 @@ def read(thr_no):
 def write(thr_no):
     global item
     global writing
-    global writer
     while True:
         print (f"writer {thr_no} is waiting...")
         write_cv.acquire()
-
-        writer += 1 # to fix writer starvation
 
         while (reading or writing):
             write_cv.wait()
@@ -48,7 +44,6 @@ def write(thr_no):
         print (f"writer {thr_no} notify: produced item {item}")
 
         writing = 0
-        writer -= 1 # to fix writer starvation
         read_cv.notify_all()
         write_cv.release()
         time.sleep(0.1)
