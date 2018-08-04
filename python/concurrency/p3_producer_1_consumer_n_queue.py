@@ -7,7 +7,7 @@ queue = queue.Queue()
 
 
 def producer():
-  """ Thread A will print odd numbers 1,3,...99 """
+  """ Producer: Add the item in the Queue """
   for i in range(10):
     item = random.randint(0, 256)
     queue.put(item)
@@ -16,7 +16,7 @@ def producer():
 
 
 def consumer1():
-  """ Thread B will print even numbers 2,4,..100 """
+  """ Consumer: Take the item out of the queue and notify that task is done using task_done() """
   while True:
     item = queue.get()
     print (f'consumer1 notify: item {item} is popped from queue')
@@ -24,7 +24,7 @@ def consumer1():
 
 
 def consumer2():
-  """ Thread B will print even numbers 2,4,..100 """
+  """ Consumer: Take the item out of the queue and notify that task is done using task_done() """
   while True:
     item = queue.get()
     print (f'consumer2 notify: item {item} is popped from queue')

@@ -2,7 +2,10 @@ import threading
 import time
 import random
 
-cv = threading.Condition()
+lock = threading.Lock()
+cv_full = threading.Condition(lock)
+cv_empty = threading.Condition(lock)
+
 is_even = False
 count_max = 10
 arr = [0] * count_max
@@ -15,16 +18,16 @@ def producer():
   while True:
     global write_idx
     global count
-    cv.acquire()
+    lock.acquire()
     while count == count_max:
-      cv.wait()
+      cv_full.wait()
     write_idx = (write_idx + 1) % count_max
     arr[write_idx] = write_idx
     count += 1
     print ("producer", count)
     time.sleep(0.1)
-    cv.notify()
-    cv.release()
+    cv_empty.notify()
+    lock.release()
 
 
 def consumer():
@@ -33,16 +36,16 @@ def consumer():
   while True:
     global read_idx
     global count
-    cv.acquire()
+    lock.acquire()
     while count == 0:
-      cv.wait()
+      cv_empty.wait()
     read_idx = (read_idx + 1) % count_max
     arr[read_idx] = 0
     count -= 1
     print ("consumer", count)
     time.sleep(0.1)
-    cv.notify()
-    cv.release()
+    cv_full.notify()
+    lock.release()
 
 
 def main():
