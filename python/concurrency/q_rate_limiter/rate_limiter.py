@@ -7,9 +7,9 @@ import collections
 
 class RateLimiter:
     def __init__(self):
-        self.maxsize = 10
+        self.interval = 2
+        self.maxsize = 10 #10 requests per 2 seconds
         self.size = 0
-        self.interval = 1
         self.rl_queue = collections.deque()
         self.lock = threading.Lock()
         self.client_cv = threading.Condition(self.lock)
@@ -19,13 +19,15 @@ class RateLimiter:
         cur_time = time.time()
         self.client_cv.acquire()
         if self.size < self.maxsize:
+            # we are not at the limit
             self.rl_queue.append((item, cur_time))
+            self.size += 1
             print("{0}/{1} client {2} notify: item {3} is added to "
                   "queue".format(time.time(), self.size, thread_id, item))
-            self.size += 1
         else:
             stored_item, stored_time = self.rl_queue[0]
-            if cur_time - stored_time > 1:
+            if cur_time - stored_time > self.interval:
+                # the oldest request interval has expired
                 self.rl_queue.popleft()
                 self.rl_queue.append((item, cur_time))
             else:
