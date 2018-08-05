@@ -4,6 +4,7 @@ import random
 
 
 class RwLockFair:
+    """ Read write lock giving fairness to both read and write. """
     def __init__(self):
         self.lock = threading.Lock()
         self.read_cv = threading.Condition(self.lock)

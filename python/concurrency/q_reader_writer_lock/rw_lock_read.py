@@ -2,8 +2,8 @@ import threading
 import time
 import random
 
-
-class RwLockFair:
+class RwLockRead:
+    """ Read write lock giving preference to Reader. """
     def __init__(self):
         self.lock = threading.Lock()
         self.read_cv = threading.Condition(self.lock)
@@ -57,7 +57,7 @@ def write(thr_no, rwlock):
 
 def main():
     t0 = time.time()
-    rwlock = RwLockFair()
+    rwlock = RwLockRead()
     threads = []
     read_threads = 20
     write_threads = 5
