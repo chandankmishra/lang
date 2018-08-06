@@ -6,11 +6,11 @@ class Vertex:
 
 class Graph:
     def __init__(self):
-        self.adj_list = []
+        self.vertex_list = []
 
     def add_edge(self, u, v):
         u.neighbors.append(v)
-        self.adj_list.append(u)
+        self.vertex_list.append(u)
 
 
 def explore_dfs(cur, seen, component):
@@ -22,9 +22,9 @@ def explore_dfs(cur, seen, component):
             explore_dfs(nxt, seen, component)
 
 
-def dfs(adj_list):
+def dfs(vertex_list):
     seen = set()
-    for cur in adj_list:
+    for cur in vertex_list:
         if cur.label not in seen:
             component = []
             explore_dfs(cur, seen, component)
@@ -47,4 +47,4 @@ graph.add_edge(v1, v3)
 graph.add_edge(v1, v4)
 graph.add_edge(v6, v7)
 
-dfs(graph.adj_list)
+dfs(graph.vertex_list)
