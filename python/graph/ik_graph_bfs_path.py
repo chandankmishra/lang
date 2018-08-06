@@ -20,6 +20,7 @@ def build_path(prev, target):
         path.append(cur.label)
         cur = prev[cur.label]
     path.append(cur.label)
+    path.reverse()
     return path
 
 
@@ -75,5 +76,4 @@ graph.add_edge(v8, v11)
 
 num_vertices = len(graph.adj_list)
 path = bfs(num_vertices, v1, v11)
-path.reverse()
-print(num_vertices, path)
+print(f"Path from {v1.label} to {v11.label} is {path}")
