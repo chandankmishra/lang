@@ -6,18 +6,18 @@ class Vertex:
 
 class Graph:
     def __init__(self):
-        self.adj_list = []
+        self.vertex_list = []
 
     def add_edge(self, u, v):
         u.neighbors.append(v)
-        self.adj_list.append(u)
+        self.vertex_list.append(u)
 
 
-def explore_bfs(start, seen, component):
+def explore_bfs(cur, seen, component):
     q = []
-    seen.add(start.label)
-    component.append(start.label)
-    q.append(start)
+    seen.add(cur.label)
+    component.append(cur.label)
+    q.append(cur)
     while q:
         cur = q.pop(0)
         for nxt in cur.neighbors:
@@ -27,9 +27,9 @@ def explore_bfs(start, seen, component):
                 q.append(nxt)
 
 
-def bfs(adj_list):
+def bfs(vertex_list):
     seen = set()
-    for cur in adj_list:
+    for cur in vertex_list:
         if cur.label not in seen:
             component = []
             explore_bfs(cur, seen, component)
@@ -53,5 +53,5 @@ graph.add_edge(v1, v4)
 graph.add_edge(v6, v7)
 
 
-seen = bfs(graph.adj_list)
+seen = bfs(graph.vertex_list)
 # print(seen)
