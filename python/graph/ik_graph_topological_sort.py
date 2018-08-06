@@ -13,21 +13,21 @@ class Graph:
         self.adj_list.append(u)
 
 
-def top_sort_util(cur, seen, stack):
+def topo_sort_util(cur, seen, stack):
     seen.add(cur.label)
 
     for nxt in cur.neighbors:
         if nxt.label not in seen:
-            top_sort_util(nxt, seen, stack)
+            topo_sort_util(nxt, seen, stack)
     stack.append(cur.label)
 
 
-def top_sort(adj_list):
+def topo_sort(adj_list):
     seen = set()
     stack = []
     for cur in adj_list:
         if cur.label not in seen:
-            top_sort_util(cur, seen, stack)
+            topo_sort_util(cur, seen, stack)
     stack.reverse()
     print(stack)
 
@@ -49,4 +49,4 @@ graph.add_edge(v1, v4)
 graph.add_edge(v5, v6)
 graph.add_edge(v6, v7)
 
-top_sort(graph.adj_list)
+topo_sort(graph.adj_list)

@@ -25,6 +25,7 @@ def build_path(prev, target):
 
 
 def explore_bfs(num_vertices, start, target):
+    """ return the distance and the path to the target."""
     seen = set()
     dist = [0] * (num_vertices + 1)
     prev = [None] * (num_vertices + 1)
