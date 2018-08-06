@@ -24,7 +24,7 @@ def build_path(prev, target):
     return path
 
 
-def bfs(num_vertices, start, target):
+def explore_bfs(num_vertices, start, target):
     seen = set()
     dist = [0] * (num_vertices + 1)
     prev = [None] * (num_vertices + 1)
@@ -35,7 +35,7 @@ def bfs(num_vertices, start, target):
     while q:
         cur = q.pop(0)
         if cur.label == target.label:
-            return build_path(prev, target)
+            return dist[target.label], build_path(prev, target)
 
         for nxt in cur.neighbors:
             if nxt.label not in seen:
@@ -43,7 +43,7 @@ def bfs(num_vertices, start, target):
                 dist[nxt.label] = dist[cur.label] + 1
                 prev[nxt.label] = cur
                 q.append(nxt)
-    return []
+    return 0, []
 
 
 v1 = Vertex(1)
@@ -75,5 +75,5 @@ graph.add_edge(v7, v10)
 graph.add_edge(v8, v11)
 
 num_vertices = len(graph.adj_list)
-path = bfs(num_vertices, v1, v11)
-print(f"Path from {v1.label} to {v11.label} is {path}")
+dist, path = explore_bfs(num_vertices, v1, v11)
+print(f"Path from {v1.label} to {v11.label} is {path} and distance {dist}")
