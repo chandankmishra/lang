@@ -38,12 +38,29 @@ def get_max_stock_price(results, cursor):
       date, price = row[0][0], row[0][1]
       results.append([stock, str(date), price])
 
+def get_last_date(cursor):
+    """
+    Get the last entry with valid data
+    """
+    select_str = f"select *  from stock_price order by date desc limit 10;"
+    try:
+        cursor.execute(select_str)
+    except:
+        print ("ERROR", nsert_str)
+    current_price = cursor.fetchall()
+    for row in range(len(current_price)):
+        cur_row = current_price[row]
+        if cur_row[1] > 0.0:
+            return datetime.datetime.strptime(str(cur_row[0]), "%Y-%m-%d").date()
+    return datetime.date.today()
+
 def get_current_price(results, cursor):
     """
     Get the current date stock price
     @todo: find the last entry with valid data
     """
-    select_str = f"select *  from stock_price order by date desc limit 1;"
+    last_date = get_last_date(cursor)
+    select_str = "select * from stock_price where date = '{}';".format(last_date)
     try:
         cursor.execute(select_str)
     except:
