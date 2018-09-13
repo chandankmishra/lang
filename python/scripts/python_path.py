@@ -1,4 +1,4 @@
+# script to print the python path
 import sys
 from pprint import pprint as p
-
-p(sys.path)
+print(sys.path)
