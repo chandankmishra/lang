@@ -1,16 +1,16 @@
 class Vertex:
     def __init__(self, label):
-        self.neighbors = []
+        self.neighbors = set()
         self.label = label
 
 
 class Graph:
     def __init__(self):
-        self.vertex_list = []
+        self.vertex_list = set()
 
     def add_edge(self, u, v):
-        u.neighbors.append(v)
-        self.vertex_list.append(u)
+        u.neighbors.add(v)
+        self.vertex_list.add(u)
 
 
 def explore_dfs(cur, seen, component):
@@ -36,7 +36,6 @@ v2 = Vertex(2)
 v3 = Vertex(3)
 v4 = Vertex(4)
 v5 = Vertex(5)
-
 v6 = Vertex(6)
 v7 = Vertex(7)
 
@@ -46,5 +45,6 @@ graph.add_edge(v2, v5)
 graph.add_edge(v1, v3)
 graph.add_edge(v1, v4)
 graph.add_edge(v6, v7)
+
 
 dfs(graph.vertex_list)
