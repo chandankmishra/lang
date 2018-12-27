@@ -23,13 +23,28 @@ def close_mysql_db():
     DB.commit()
     DB.close()
 
-def get_max_stock_price(results, cursor):
+def get_max_stock_price_analysis(results, cursor):
     """
     Get the max stock price in the current year
     @todo: remove hardcoding for 2018.
     """
     for stock in STOCKS:
-      select_str = f"select date, {stock} from stock_price where {stock} = (select max({stock}) from stock_price where date >= '2018-01-01 00:00:00');"
+      select_str = f"select date, {stock} from stock_price_analysis where {stock} = (select max({stock}) from stock_price_analysis where date >= '2018-01-01 00:00:00');"
+      try:
+        cursor.execute(select_str)
+      except:
+        print ("ERROR", nsert_str)
+      row = cursor.fetchall()
+      date, price = row[0][0], row[0][1]
+      results.append([stock, str(date), price])
+
+def get_max_stock_price_analysis_days(results, cursor, date):
+    """
+    Get the max stock price in the current year
+    @todo: remove hardcoding for 2018.
+    """
+    for stock in STOCKS:
+      select_str = f"select date, {stock} from stock_price_analysis where {stock} = (select max({stock}) from stock_price_analysis where date >= {date});"
       try:
         cursor.execute(select_str)
       except:
@@ -42,7 +57,7 @@ def get_last_date(cursor):
     """
     Get the last entry with valid data
     """
-    select_str = f"select *  from stock_price order by date desc limit 10;"
+    select_str = f"select *  from stock_price_analysis order by date desc limit 10;"
     try:
         cursor.execute(select_str)
     except:
@@ -60,7 +75,7 @@ def get_current_price(results, cursor):
     @todo: find the last entry with valid data
     """
     last_date = get_last_date(cursor)
-    select_str = "select * from stock_price where date = '{}';".format(last_date)
+    select_str = "select * from stock_price_analysis where date = '{}';".format(last_date)
     try:
         cursor.execute(select_str)
     except:
@@ -79,7 +94,7 @@ def get_year_start_price(results, cursor):
     Get the price at year start
     @todo: find the first valid date in the year
     """
-    select_str = f"select * from stock_price where date = '2018-01-02 00:00:00';"
+    select_str = f"select * from stock_price_analysis where date = '2018-01-01 00:00:00';"
     try:
         cursor.execute(select_str)
     except:
@@ -89,14 +104,95 @@ def get_year_start_price(results, cursor):
         if i == len(results): break
         results[i].append(price)
 
+def update_todays_price(results, cursor):
+    """
+    Get the price at year start
+    @todo: find the first valid date in the year
+    """
+    today = datetime.date.today()
+    for idx, stock in enumerate(STOCKS):
+      # get the today's price
+      select_str = f"select {stock} from stock_price_analysis where date = '{today} 00:00:00';"
+      try:
+        cursor.execute(select_str)
+      except:
+          raise
+      row = cursor.fetchall()
+      price = row[0][0]
+      results[idx].append(price)
+
+def get_percent_change(start, end):
+    """
+    Get the current date stock price
+    @todo: find the last entry with valid data
+    """
+    increase = 0.0
+    if start > 0.0:
+        increase = "{0}%".format(round(((end -  start) * 100) / start, 2))
+    return increase
+
+
+def update_old_stock_price(results, cursor, days):
+    """
+    Get the price at year start
+    @todo: find the first valid date in the year
+    """
+    today = datetime.date.today()
+    before = today - datetime.timedelta(days=days)
+    for idx, stock in enumerate(STOCKS):
+      # get the price before N days
+      select_str = f"select {stock} from stock_price_analysis where date = '{before} 00:00:00';"
+      try:
+        cursor.execute(select_str)
+      except:
+          raise
+      row = cursor.fetchall()
+      price = row[0][0]
+      today_price = results[idx][6]
+      results[idx].append(get_percent_change(price, today_price))
+      results[idx].append(price)
+
+      # get the max price
+      select_str = f"select {stock} from stock_price_analysis where {stock} = (select max({stock}) from stock_price_analysis where date >= '{before} 00:00:00');"
+      try:
+        cursor.execute(select_str)
+      except:
+          raise
+      row = cursor.fetchall()
+      price = row[0][0]
+      results[idx].append(price)
+
+      # get the min price
+      select_str = f"select {stock} from stock_price_analysis where {stock} = (select min({stock}) from stock_price_analysis where date >= '{before} 00:00:00');"
+      try:
+        cursor.execute(select_str)
+      except:
+          raise
+      row = cursor.fetchall()
+      price = row[0][0]
+      results[idx].append(price)
+
+def get_prev_stock_price(results, cursor):
+    """
+    Get the price at year start
+    @todo: find the first valid date in the year
+    """
+    update_todays_price(results, cursor)
+    update_old_stock_price(results, cursor, 1)
+    update_old_stock_price(results, cursor, 7)
+    update_old_stock_price(results, cursor, 30)
+    update_old_stock_price(results, cursor, 90)
+    update_old_stock_price(results, cursor, 365)
+
 def display_result(results):
     """
     Display the result of analysis in tabular format
     """
-    results = sorted(results, key=lambda x:-x[0])
-    print ('% increase\tcompany\tdate\t\tyear-start\tcurrent\thighest')
+    # r[15] is % change in 30days
+    results = sorted(results, key=lambda x:-float(x[7][:-1]))
+    print ('% increase\tcompany\t\tcurrent\t\thighest\t1d%\t\t7d%\t\t30d%\t\t90d%\t\t365d%')
     for r in results:
-        print ('{0}%\t\t{1}\t{2}\t{3}\t\t{4}\t{5}'.format(r[0], r[1], r[2], r[5], r[4], r[3]))
+        print ('{0}%\t\t{1}\t\t{2}\t\t{3}\t{4}\t\t{5}\t\t{6}\t\t{7}\t\t{8}'.format(r[0], r[1], r[6], r[3], r[7], r[11], r[15], r[19], r[23]))
 
 def main():
     """
@@ -104,10 +200,15 @@ def main():
     """
     results = []
     cursor = connect_mysql_db()
-    get_max_stock_price(results, cursor)
+    get_max_stock_price_analysis(results, cursor)
     get_current_price(results, cursor)
     get_year_start_price(results, cursor)
+    get_prev_stock_price(results, cursor)
     display_result(results)
+    '''
+    for result in results:
+        print (result)
+    '''
     close_mysql_db()
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ import datetime
 import pandas as pd
 import MySQLdb
 import pdb
+from yahoo_fin import stock_info as si
 
 STOCKS = ['TWTR', 'NFLX', 'FB', 'TSLA', 'DBX', 'AMZN', 'GOOG', 'ZS', 'AMD', 'AAPL', 'SNAP', 'MSFT', 'ADBE', 'BABA', 'PANW', 'ORCL', 'NVDA', 'VMW', 'ANET', 'YELP', 'INTU']
 
@@ -33,7 +34,7 @@ def insert_rows(cursor):
     last_date = cursor.fetchall()
     start = last_date[0][0]
     end = datetime.date.today()
-    while start <= end:
+    while start < end:
         start += datetime.timedelta(days=1)
         insert_query = f"insert into stock_price values('{start}',0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);"
         print (insert_query)
@@ -47,8 +48,8 @@ def update_price_using_robinhood(cursor):
     end = datetime.date.today()
     start = end - datetime.timedelta(days=30)
     for stock in STOCKS:
-      #d = web.DataReader(stock, 'robinhood', start, end)
-      d = web.DataReader(stock, 'robinhood', '2018-08-06', '2018-08-06')
+      d = web.DataReader(stock, 'robinhood', start, end)
+      #d = web.DataReader(stock, 'robinhood', '2018-08-06', '2018-08-06')
       dstr = str(d).split('\n')
       dstr = dstr[2:-2]
       for i in range(len(dstr)):
@@ -62,7 +63,7 @@ def update_price_using_robinhood(cursor):
           continue
         dd = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
         update_query = "UPDATE stock_price SET {} = {} where date='{}';".format(company, price, dd)
-        print (update_query)
+        #print (update_query)
         try:
           cursor.execute(update_query)
         except:
@@ -72,8 +73,8 @@ def update_price_using_yahoo(cursor):
     # Fetch data from Yahoo
     for stock in STOCKS:
       try:
-        #d = web.DataReader(stock, 'yahoo', start, end)
-        d = web.DataReader(stock, 'yahoo', '2018-08-01', '2018-08-06')
+        d = web.DataReader(stock, 'yahoo', start, end)
+        #d = web.DataReader(stock, 'yahoo', '2018-08-01', '2018-08-06')
       except:
         continue
       dstr = str(d).split('\n')
@@ -90,16 +91,90 @@ def update_price_using_yahoo(cursor):
           continue
         dd = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
         update_query = "UPDATE stock_price SET {} = {} where date='{}';".format(stock, price, dd, stock)
-        print (update_query)
+        #print (update_query)
         try:
           cursor.execute(update_query)
         except:
           print ("ERROR", update_query)
 
-cursor = connect_mysql_db()
-#update_price_using_robinhood(cursor)
-#update_price_using_yahoo(cursor)
-insert_rows(cursor)
-close_mysql_db()
+def update_stock_analysis_table(cursor):
+    # drop stock_price_analysis table
+    query = f"drop table stock_price_analysis;"
+    try:
+        cursor.execute(query)
+    except:
+        print ("ERROR", query)
+
+    # create stock_price_analysis table
+    query = f"create table stock_price_analysis like stock_price;"
+    try:
+        cursor.execute(query)
+    except:
+        print ("ERROR", query)
+
+    # copy stock_price table rows in to stock_price_analysis table
+    query = f"insert stock_price_analysis select * from stock_price;;"
+    try:
+        cursor.execute(query)
+    except:
+        print ("ERROR", query)
+
+    # get all rows from stock_price_analysis table
+    query = f"select * from stock_price_analysis;"
+    try:
+        cursor.execute(query)
+    except:
+        print ("ERROR", query)
+    #breakpoint()
+    all_records = cursor.fetchall()
+    priv_record = list(all_records[0])
+    for record in all_records:
+        date_str = record[0]
+        if date_str == '...':
+          continue
+        dd = date_str
+        for idx, stock in enumerate(STOCKS):
+            idx = idx+1
+            if record[idx] > 0.0:
+                priv_record[idx] = record[idx]
+                continue
+            price = priv_record[idx]
+            update_query = "UPDATE stock_price_analysis SET {} = {} where date='{}';".format(stock, price, dd, stock)
+            #print (update_query)
+            try:
+              cursor.execute(update_query)
+            except:
+              print ("ERROR", update_query)
+
+    # update todays price
+    today = datetime.date.today()
+    price = 0.0
+    for idx, stock in enumerate(STOCKS):
+        try:
+            price = si.get_live_price(stock)
+        except:
+            pass
+        update_query = "UPDATE stock_price_analysis SET {} = {} where date='{}';".format(stock, price, today)
+        try:
+          cursor.execute(update_query)
+        except:
+          print ("ERROR", update_query)
+
+def main():
+    """
+    main driver program
+    """
+	cursor = connect_mysql_db()
+	print("Insert new rows in stock price table..")
+	insert_rows(cursor)
+	print("Update stock price table..")
+	update_price_using_robinhood(cursor)
+	update_price_using_yahoo(cursor)
+	print("Update stock price analysis table..")
+	update_stock_analysis_table(cursor)
+	close_mysql_db()
+
+if __name__ == "__main__":
+    main()
 
 #end of file
