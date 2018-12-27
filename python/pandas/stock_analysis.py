@@ -7,6 +7,7 @@ import datetime
 import pandas as pd
 import MySQLdb
 import pdb
+import argparse
 
 STOCKS = ['TWTR', 'NFLX', 'FB', 'TSLA', 'DBX', 'AMZN', 'GOOG', 'ZS', 'AMD', 'AAPL', 'SNAP', 'MSFT', 'ADBE', 'BABA', 'PANW', 'ORCL', 'NVDA', 'VMW', 'ANET', 'YELP', 'INTU']
 
@@ -184,19 +185,28 @@ def get_prev_stock_price(results, cursor):
     update_old_stock_price(results, cursor, 90)
     update_old_stock_price(results, cursor, 365)
 
-def display_result(results):
+def display_result(results, ddict, DAYS):
     """
     Display the result of analysis in tabular format
     """
-    # r[15] is % change in 30days
-    results = sorted(results, key=lambda x:-float(x[7][:-1]))
-    print ('% increase\tcompany\t\tcurrent\t\thighest\t1d%\t\t7d%\t\t30d%\t\t90d%\t\t365d%')
+    print (DAYS, type(DAYS))
+    # mapping for num of days to the index into the result array
+    ddict = {}
+    ddict[1] = 7
+    ddict[7] = 11
+    ddict[30] = 15
+    ddict[90] = 19
+    ddict[365] = 23
+    # sort the result
+    col_num = ddict[DAYS]
+    results = sorted(results, key=lambda x:float(x[col_num][:-1]))
+    print ('% increase\tcompany\t\tcurrent\t\thighest\t\t1d%\t\t7d%\t\t30d%\t\t90d%\t\t365d%')
     for r in results:
-        print ('{0}%\t\t{1}\t\t{2}\t\t{3}\t{4}\t\t{5}\t\t{6}\t\t{7}\t\t{8}'.format(r[0], r[1], r[6], r[3], r[7], r[11], r[15], r[19], r[23]))
+        print ('{0}%\t\t{1}\t\t{2}\t\t{3}\t\t{4}\t\t{5}\t\t{6}\t\t{7}\t\t{8}'.format(r[0], r[1], r[6], r[3], r[7], r[11], r[15], r[19], r[23]))
 
-def main():
+def stock_analysis(DAYS):
     """
-    main driver program
+    stock_analysis driver program
     """
     results = []
     cursor = connect_mysql_db()
@@ -204,7 +214,7 @@ def main():
     get_current_price(results, cursor)
     get_year_start_price(results, cursor)
     get_prev_stock_price(results, cursor)
-    display_result(results)
+    display_result(results, DAYS)
     '''
     for result in results:
         print (result)
@@ -212,6 +222,15 @@ def main():
     close_mysql_db()
 
 if __name__ == "__main__":
-    main()
+    # initiate the parser
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument("--days", "-d", help="set number of days")
+    ARGS = PARSER.parse_args()
+    if ARGS.days is None:
+        DAYS = 30
+    else:
+        DAYS = int(ARGS.days)
+    print("Show stock analysis sorted by:", DAYS)
+    stock_analysis(DAYS)
 
 #end of file
