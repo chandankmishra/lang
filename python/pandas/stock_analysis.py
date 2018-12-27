@@ -34,7 +34,7 @@ def get_max_stock_price_analysis(results, cursor):
       try:
         cursor.execute(select_str)
       except:
-        print ("ERROR", nsert_str)
+        print("ERROR", nsert_str)
       row = cursor.fetchall()
       date, price = row[0][0], row[0][1]
       results.append([stock, str(date), price])
@@ -49,7 +49,7 @@ def get_max_stock_price_analysis_days(results, cursor, date):
       try:
         cursor.execute(select_str)
       except:
-        print ("ERROR", nsert_str)
+        print("ERROR", nsert_str)
       row = cursor.fetchall()
       date, price = row[0][0], row[0][1]
       results.append([stock, str(date), price])
@@ -62,7 +62,7 @@ def get_last_date(cursor):
     try:
         cursor.execute(select_str)
     except:
-        print ("ERROR", nsert_str)
+        print("ERROR", nsert_str)
     current_price = cursor.fetchall()
     for row in range(len(current_price)):
         cur_row = current_price[row]
@@ -80,7 +80,7 @@ def get_current_price(results, cursor):
     try:
         cursor.execute(select_str)
     except:
-        print ("ERROR", nsert_str)
+        print("ERROR", nsert_str)
     current_price = cursor.fetchall()
     for i, price in enumerate(current_price[0][1:]):
         if i == len(results): break
@@ -99,7 +99,7 @@ def get_year_start_price(results, cursor):
     try:
         cursor.execute(select_str)
     except:
-        print ("ERROR", nsert_str)
+        print("ERROR", nsert_str)
     start_price = cursor.fetchall()
     for i, price in enumerate(start_price[0][1:]):
         if i == len(results): break
@@ -199,9 +199,9 @@ def display_result(results, DAYS):
     # sort the result
     col_num = ddict[DAYS]
     results = sorted(results, key=lambda x:float(x[col_num][:-1]))
-    print ('% increase\tcompany\t\tcurrent\t\thighest\t\t1d%\t\t7d%\t\t30d%\t\t90d%\t\t365d%')
+    print('% increase\tcompany\t\tcurrent\t\thighest\t\t1d%\t\t7d%\t\t30d%\t\t90d%\t\t365d%')
     for r in results:
-        print ('{0}%\t\t{1}\t\t{2}\t\t{3}\t\t{4}\t\t{5}\t\t{6}\t\t{7}\t\t{8}'.format(r[0], r[1], r[6], r[3], r[7], r[11], r[15], r[19], r[23]))
+        print('{0}%\t\t{1}\t\t{2}\t\t{3}\t\t{4}\t\t{5}\t\t{6}\t\t{7}\t\t{8}'.format(r[0], r[1], r[6], r[25], r[7], r[11], r[15], r[19], r[23]))
 
 def stock_analysis(DAYS):
     """
@@ -216,7 +216,7 @@ def stock_analysis(DAYS):
     display_result(results, DAYS)
     '''
     for result in results:
-        print (result)
+        print(result)
     '''
     close_mysql_db()
 
