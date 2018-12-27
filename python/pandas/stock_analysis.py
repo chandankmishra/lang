@@ -185,11 +185,10 @@ def get_prev_stock_price(results, cursor):
     update_old_stock_price(results, cursor, 90)
     update_old_stock_price(results, cursor, 365)
 
-def display_result(results, ddict, DAYS):
+def display_result(results, DAYS):
     """
     Display the result of analysis in tabular format
     """
-    print (DAYS, type(DAYS))
     # mapping for num of days to the index into the result array
     ddict = {}
     ddict[1] = 7
