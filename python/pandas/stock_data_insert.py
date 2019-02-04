@@ -10,7 +10,7 @@ import MySQLdb
 import pdb
 from yahoo_fin import stock_info as si
 
-STOCKS = ['TWTR', 'NFLX', 'FB', 'TSLA', 'DBX', 'AMZN', 'GOOG', 'ZS', 'AMD', 'AAPL', 'SNAP', 'MSFT', 'ADBE', 'BABA', 'PANW', 'ORCL', 'NVDA', 'VMW', 'ANET', 'YELP', 'INTU']
+STOCKS = ['TWTR', 'NFLX', 'FB', 'TSLA', 'DBX', 'AMZN', 'GOOG', 'ZS', 'AMD', 'AAPL', 'SNAP', 'MSFT', 'ADBE', 'BABA', 'PANW', 'ORCL', 'NVDA', 'VMW', 'ANET', 'YELP', 'INTU', 'ROKU','SQ','TWLO']
 
 DB = None
 def connect_mysql_db():
@@ -36,16 +36,17 @@ def insert_rows(cursor):
     end = datetime.date.today()
     while start < end:
         start += datetime.timedelta(days=1)
-        insert_query = f"insert into stock_price values('{start}',0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);"
+        insert_query = f"insert into stock_price values('{start}',0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);"
         print (insert_query)
         try:
             cursor.execute(insert_query)
         except:
             print ("ERROR", insert_query)
 
-def update_price_using_robinhood(cursor):
+def update_price_using_robinhood(cursor, days):
     # Fetch data from Robinhood
-    end = datetime.date.today()
+    today = datetime.date.today()
+    end = today - datetime.timedelta(days=days)
     start = end - datetime.timedelta(days=30)
     for stock in STOCKS:
       d = web.DataReader(stock, 'robinhood', start, end)
@@ -69,7 +70,10 @@ def update_price_using_robinhood(cursor):
         except:
           print ("ERROR", update_query)
 
-def update_price_using_yahoo(cursor):
+def update_price_using_yahoo(cursor, days):
+    today = datetime.date.today()
+    end = today - datetime.timedelta(days=days)
+    start = end - datetime.timedelta(days=30)
     # Fetch data from Yahoo
     for stock in STOCKS:
       try:
@@ -91,7 +95,7 @@ def update_price_using_yahoo(cursor):
           continue
         dd = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
         update_query = "UPDATE stock_price SET {} = {} where date='{}';".format(stock, price, dd, stock)
-        #print (update_query)
+        print (update_query)
         try:
           cursor.execute(update_query)
         except:
@@ -113,7 +117,7 @@ def update_stock_analysis_table(cursor):
         print ("ERROR", query)
 
     # copy stock_price table rows in to stock_price_analysis table
-    query = f"insert stock_price_analysis select * from stock_price;;"
+    query = f"insert stock_price_analysis select * from stock_price;"
     try:
         cursor.execute(query)
     except:
@@ -146,6 +150,7 @@ def update_stock_analysis_table(cursor):
             except:
               print ("ERROR", update_query)
 
+def update_todays_price(cursor):
     # update todays price
     today = datetime.date.today()
     price = 0.0
@@ -154,7 +159,8 @@ def update_stock_analysis_table(cursor):
             price = si.get_live_price(stock)
         except:
             pass
-        update_query = "UPDATE stock_price_analysis SET {} = {} where date='{}';".format(stock, price, today)
+        update_query = "UPDATE stock_price SET {} = {} where date='{}';".format(stock, price, today)
+        print (update_query)
         try:
           cursor.execute(update_query)
         except:
@@ -164,15 +170,17 @@ def main():
     """
     main driver program
     """
-	cursor = connect_mysql_db()
-	print("Insert new rows in stock price table..")
-	insert_rows(cursor)
-	print("Update stock price table..")
-	update_price_using_robinhood(cursor)
-	update_price_using_yahoo(cursor)
-	print("Update stock price analysis table..")
-	update_stock_analysis_table(cursor)
-	close_mysql_db()
+    cursor = connect_mysql_db()
+    print("Insert new rows in stock price table..")
+    #insert_rows(cursor)
+    print("Update stock price table..")
+    days=0
+    #update_price_using_robinhood(cursor, days)
+    #update_price_using_yahoo(cursor, days)
+    print("Update stock price analysis table..")
+    update_todays_price(cursor)
+    update_stock_analysis_table(cursor)
+    close_mysql_db()
 
 if __name__ == "__main__":
     main()
