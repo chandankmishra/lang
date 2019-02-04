@@ -15,15 +15,18 @@ class AutocompleteSystem:
         :type c: str
         :rtype: List[str]
         """
-        results = []
+
         if c == "#":
             self.map[self.cur_sent] = self.map.get(self.cur_sent, 0) + 1
             self.cur_sent = ""
-        else:
-            self.cur_sent += c
-            for key in self.map:
-                if key.startswith(self.cur_sent):
-                    results.append((-self.map[key], key))
+            return []
+
+        # collect the sentences matching the input char
+        results = []
+        self.cur_sent += c
+        for key in self.map:
+            if key.startswith(self.cur_sent):
+                results.append((-self.map[key], key))
         results.sort()
         res = []
         for idx in range(min(3, len(results))):

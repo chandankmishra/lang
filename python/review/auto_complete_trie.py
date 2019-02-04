@@ -57,8 +57,11 @@ class AutocompleteSystem:
         if c == "#":
             self.trie.insert(self.cur_sent, 1)
             self.cur_sent = ""
-        else:
-            self.cur_sent += c
+            return []
+
+        # collect the sentences matching the input char
+        results = []
+        self.cur_sent += c
         results = self.trie.lookup(self.cur_sent)
         results.sort()
         res = []
