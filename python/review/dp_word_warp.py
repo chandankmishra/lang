@@ -23,8 +23,7 @@ def solveWordWrap(l, n, M):
     for i in range(n + 1):
         extras[i][i] = M - l[i - 1]
         for j in range(i + 1, n + 1):
-            extras[i][j] = (extras[i][j - 1] -
-                            l[j - 1] - 1)
+            extras[i][j] = (extras[i][j - 1] - l[j - 1] - 1)
 
     for i in range(n + 1):
         for j in range(i, n + 1):
@@ -33,16 +32,13 @@ def solveWordWrap(l, n, M):
             elif j == n and extras[i][j] >= 0:
                 lc[i][j] = 0
             else:
-                lc[i][j] = (extras[i][j] *
-                            extras[i][j])
+                lc[i][j] = (extras[i][j] * extras[i][j])
 
     c[0] = 0
     for j in range(1, n + 1):
         c[j] = INF
         for i in range(1, j + 1):
-            if (c[i - 1] != INF and
-                lc[i][j] != INF and
-                    ((c[i - 1] + lc[i][j]) < c[j])):
+            if (c[i - 1] != INF and lc[i][j] != INF and ((c[i - 1] + lc[i][j]) < c[j])):
                 c[j] = c[i - 1] + lc[i][j]
                 p[j] = i
     printSolution(p, n)
