@@ -13,7 +13,6 @@ def solveBalancedLineBreaks(words, limit):
         noOfWordsInCurrentLine = 0
         dp[i] = float("inf")
         for j in range(i, n):
-            print ("i", i, "j", j)
             # Here, current line means the first line having sequence of words [i,i+1,...,j]
             currentLineNonSpaceChars += len(words[j])
             noOfWordsInCurrentLine += 1
@@ -30,7 +29,6 @@ def solveBalancedLineBreaks(words, limit):
             currentLineCost = currentLineCost * currentLineCost * currentLineCost
 
             dp[i] = min(dp[i], currentLineCost + dp[j + 1])
-    print (dp)
     return dp[0]
 
 
