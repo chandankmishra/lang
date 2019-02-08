@@ -1,51 +1,39 @@
+def solveBalancedLineBreaks(words, limit):
+    n = len(words)
+    dp = [0] * (n + 1)
+    # dp[i] = x denotes that the total minimized cost is x if we had sequence of words
+    # [i,i+1,...,n-1] and we put line breaks in a most balanced way
 
-INF = float("inf")
+    currentLineNonSpaceChars, noOfWordsInCurrentLine, currentLineTotalChars = 0, 0, 0
+    currentLineCost = 0
+    for i in range(n - 1, -1, -1):
+        # currentLineNonSpaceChars denotes, as name suggests, sum of no of characters in current line
+        # excluding spaces present between each consecutive pair of words
+        currentLineNonSpaceChars = 0
+        noOfWordsInCurrentLine = 0
+        dp[i] = float("inf")
+        for j in range(i, n):
+            print ("i", i, "j", j)
+            # Here, current line means the first line having sequence of words [i,i+1,...,j]
+            currentLineNonSpaceChars += len(words[j])
+            noOfWordsInCurrentLine += 1
 
-
-def printSolution(p, n):
-    k = 0
-    if p[n] == 1:
-        k = 1
-    else:
-        k = printSolution(p, p[n] - 1) + 1
-    print('Line number ', k, ': From word no. ',
-          p[n], 'to ', n)
-    return k
-
-
-def solveWordWrap(l, n, M):
-    extras = [[0 for i in range(n + 1)] for i in range(n + 1)]
-    lc = [[0 for i in range(n + 1)] for i in range(n + 1)]
-
-    c = [0 for i in range(n + 1)]
-    p = [0 for i in range(n + 1)]
-
-    for i in range(n + 1):
-        extras[i][i] = M - l[i - 1]
-        for j in range(i + 1, n + 1):
-            extras[i][j] = (extras[i][j - 1] - l[j - 1] - 1)
-
-    for i in range(n + 1):
-        for j in range(i, n + 1):
-            if extras[i][j] < 0:
-                lc[i][j] = INF
-            elif j == n and extras[i][j] >= 0:
-                lc[i][j] = 0
+            # currentLineTotalChars denotes, as name suggests, sum of no of characters in current line
+            # including spaces present between each consecutive pair of words
+            currentLineTotalChars = currentLineNonSpaceChars + noOfWordsInCurrentLine - 1
+            if currentLineTotalChars > limit:
+                break
+            if j == n - 1:
+                currentLineCost = 0
             else:
-                lc[i][j] = (extras[i][j] * extras[i][j])
+                currentLineCost = limit - currentLineTotalChars
+            currentLineCost = currentLineCost * currentLineCost * currentLineCost
 
-    c[0] = 0
-    for j in range(1, n + 1):
-        c[j] = INF
-        for i in range(1, j + 1):
-            if (c[i - 1] != INF and lc[i][j] != INF and ((c[i - 1] + lc[i][j]) < c[j])):
-                c[j] = c[i - 1] + lc[i][j]
-                p[j] = i
-    printSolution(p, n)
+            dp[i] = min(dp[i], currentLineCost + dp[j + 1])
+    print (dp)
+    return dp[0]
 
 
-# Driver Code
-l = [3, 2, 2, 5]
-n = len(l)
-M = 6
-solveWordWrap(l, n, M)
+words = ["abc", "cd", "e", "ijklm"]
+limit = 6
+print (solveBalancedLineBreaks(words, limit))
