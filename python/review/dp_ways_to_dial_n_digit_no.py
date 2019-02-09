@@ -3,6 +3,7 @@
 Formula for number of ways to create a number of length l which ends at 0.
 nw(l, 0) = nw(l-1, 8)
 nw(l, 1) = nw(l-1, 2) + nw(l-1, 4)
+... so on.
 
 '''
 def num_of_ways(n, prev):
