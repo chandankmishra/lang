@@ -1,4 +1,5 @@
 ''' 70. Climbing Stairs
+https://leetcode.com/problems/climbing-stairs/description/
 Formula:
 dp[0] = 1
 dp[n] = dp[n-1] + dp[n-2]
@@ -18,6 +19,7 @@ def climb_stairs(n):
 # print (climb_stairs(15))
 ###################################################
 ''' 198. House Robber
+https://leetcode.com/problems/house-robber/description/
 Formula:
 dp[1] = nums[0]
 dp[n] = max(dp[n-1], dp[n-2]+nums[n-1])
@@ -37,6 +39,7 @@ def house_robber(nums):
 # print (house_robber([2, 7, 9, 3, 1]))  # 12
 ######################################################
 ''' 322. Coin Change
+https://leetcode.com/problems/coin-change/
 Formula
 dp[0] = 0
 dp[n] = min((dp[i-d0], dp[i-d1].... dp[i-di], ... dp[i-dn-1]) + 1
@@ -58,13 +61,13 @@ def coin_change(coins, amount):
 # print (coin_change([1, 2, 5], 11))
 # print (coin_change([2], 3))
 ######################################################
-''' 518. Coin Change 2 https://leetcode.com/problems/coin-change-2/description/
+''' 518. Coin Change 2
+https://leetcode.com/problems/coin-change-2/description/
 Formula
 The outer loop should be for coin. So that came coin should not be counted multiple time for different amounts
 # dp[0] = 1
 # dp[n] = sum((dp[i-d0], dp[i-d1].... dp[i-di], ... dp[i-dn-1]) (i-dk >=0)
 '''
-
 
 def coin_change2(coins, amount):
     dp = [0] * (amount + 1)
@@ -83,11 +86,11 @@ def coin_change2(coins, amount):
 ######################################################
 '''
 64. Minimum Path Sum
+https://leetcode.com/problems/minimum-path-sum/
 Formula:
 dp[n-1][m-1] = grid[n-1][m-1]
 dp[r][c] = min(dp[r + 1][c], dp[r][c + 1]) + grid[r][c]
 '''
-
 
 def min_path_sum(grid):
     n = len(grid)
@@ -108,11 +111,11 @@ arr = [[1, 3, 1], [1, 50, 10], [4, 2, 1]]
 ######################################################
 '''
 62. Unique Paths
+https://leetcode.com/problems/unique-paths/
 Formula:
 dp[rows-1][cols-1] = 1
 dp[r][c] = dp[r+1][c] + dp[r][c+1]
 '''
-
 
 def unique_paths(cols, rows):
     dp = [[0 for _ in range(cols + 1)] for _ in range(rows + 1)]
@@ -129,13 +132,13 @@ def unique_paths(cols, rows):
 # print (unique_paths(7, 3))  # 28
 ######################################################
 '''
-63. Unique Paths II https://leetcode.com/problems/unique-paths-ii/description/
+63. Unique Paths II
+https://leetcode.com/problems/unique-paths-ii/description/
 Formula:
 # dp[rows-1][cols-1] = 1
 # dp[r][c] = dp[r+1][c] + dp[r][c+1]
 if grid[r][c] == 1 continue 0=>OK 1=>Obstracles
 '''
-
 
 def unique_paths(grid):
     rows = len(grid)
@@ -217,7 +220,6 @@ dp[0][m] = grid[0][m] # not required if dp table size is n+1, m+1
 dp[r][c] = min(dp[r-1][c-1], dp[r-1][c], dp[r][c-1]) +1
 '''
 
-
 def maximalSquare(matrix):
     n, m = len(matrix), len(matrix[0])
     dp = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
@@ -239,7 +241,6 @@ https://leetcode.com/problems/partition-equal-subset-sum/description/
 Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
 Formula:
 '''
-
 
 def helper(nums, start, target, memo):
     n = len(nums)
@@ -276,13 +277,14 @@ def canPartition(nums):
 
 '''
 Knight's tour!
-How many different phone numbers of given length can be formed starting from the given digit? The constraint is that the movement from one digit to the next is similar to the movement of the Knight in a chess game.
+How many different phone numbers of given length can be formed starting from the 
+given digit? The constraint is that the movement from one digit to the next is 
+similar to the movement of the Knight in a chess game.
 
 Formula:
 dp[digit][num_digit] = (dp[0][num_digit - 1], dp[1][num_digit - 1],.... dp[i][num_digit - 1]) for i in range(moves[digit])
 
 '''
-
 
 def num_phone_numbers(startdigit, phonenumberlength):
     move = [[4, 6], [8, 6], [7, 9], [4, 8], [3, 9, 0], [None], [1, 7, 0], [2, 6], [1, 3], [2, 4]]
