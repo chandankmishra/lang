@@ -18,8 +18,8 @@ def egg_drop(floors, eggs):
     for f in range(2, floors + 1):
         for e in range(2, eggs + 1):
             dp[f][e] = float("inf")
-            for i in range(0, f):
-                dp[f][e] = min(dp[f][e], max(dp[floors - f][e], dp[f - 1][e - 1])) + 1
+            for i in range(1, f):
+                dp[f][e] = min(dp[f][e], max(dp[floors - f][e], dp[f - 1][e - 1]) + 1)
     return dp[floors][eggs]
 
 

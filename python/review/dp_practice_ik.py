@@ -384,10 +384,10 @@ def maxProdDp(n):
     return dp[n]
 
 
-print("Maximum Product is ", maxProdMemo(5))
-print("Maximum Product is ", maxProdMemo(10))
-print("Maximum Product is ", maxProdDp(5))
-print("Maximum Product is ", maxProdDp(10))
+# print("Maximum Product is ", maxProdMemo(5))
+# print("Maximum Product is ", maxProdMemo(10))
+# print("Maximum Product is ", maxProdDp(5))
+# print("Maximum Product is ", maxProdDp(10))
 
 
 '''
@@ -432,9 +432,9 @@ def wordBreakMemo(s, wordDict):
     return helper(s, 0, set(wordDict), {})
 
 
-# print (wordBreakDP("leetcode", ["leet", "code"]))
-# print (wordBreakDP("applepenapple", ["apple", "pen"]))
-# print (wordBreakDP("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+print (wordBreakMemo("leetcode", ["leet", "code"]))
+print (wordBreakMemo("applepenapple", ["apple", "pen"]))
+print (wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
 
 
 '''
