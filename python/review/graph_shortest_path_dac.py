@@ -2,12 +2,6 @@
 
 # Python program to find single source shortest paths 
 # for Directed Acyclic Graphs Complexity :OV(V+E) 
-from collections import defaultdict 
-  
-# Graph is represented using adjacency list. Every 
-# node of adjacency list contains vertex number of 
-# the vertex to which edge connects. It also contains 
-# weight of the edge 
 class Graph: 
     def __init__ (self): 
         self.graph = {}
