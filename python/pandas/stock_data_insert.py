@@ -172,7 +172,7 @@ def main():
     """
     cursor = connect_mysql_db()
     print("Insert new rows in stock price table..")
-    #insert_rows(cursor)
+    insert_rows(cursor)
     print("Update stock price table..")
     days=0
     #update_price_using_robinhood(cursor, days)

@@ -7,8 +7,8 @@ cv_full = threading.Condition(lock)
 cv_empty = threading.Condition(lock)
 
 is_even = False
-count_max = 10
-arr = [0] * count_max
+capacity = 10
+arr = [0] * capacity
 read_idx, write_idx, count = 0, 0, 0
 
 
@@ -18,14 +18,17 @@ def producer():
   while True:
     global write_idx
     global count
+
     lock.acquire()
-    while count == count_max:
+    while count == capacity:
       cv_full.wait()
-    write_idx = (write_idx + 1) % count_max
+
+    write_idx = (write_idx + 1) % capacity
     arr[write_idx] = write_idx
     count += 1
-    print ("producer", count)
+    print ("producer", count, write_idx)
     time.sleep(0.1)
+
     cv_empty.notify()
     lock.release()
 
@@ -36,14 +39,17 @@ def consumer():
   while True:
     global read_idx
     global count
+
     lock.acquire()
     while count == 0:
       cv_empty.wait()
-    read_idx = (read_idx + 1) % count_max
+
+    read_idx = (read_idx + 1) % capacity
     arr[read_idx] = 0
     count -= 1
-    print ("consumer", count)
+    print ("consumer", count, read_idx)
     time.sleep(0.1)
+
     cv_full.notify()
     lock.release()
 
