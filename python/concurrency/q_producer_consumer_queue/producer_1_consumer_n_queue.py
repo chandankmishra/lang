@@ -26,7 +26,7 @@ def main():
     t0 = time.time()
     threads=[]
     threads.append(threading.Thread(target=producer))
-    for i in range(2):
+    for i in range(3):
         threads.append(threading.Thread(target=consumer, args=(i,)))
 
     for thread in threads:

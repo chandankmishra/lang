@@ -4,6 +4,8 @@ import sys
 from queue import Queue
 from threading import Thread
 
+class QuitTask(Exception):
+    pass
 
 class Worker(Thread):
     """ Thread executing tasks from a given tasks queue """
@@ -19,6 +21,9 @@ class Worker(Thread):
             func, args, kargs = self.tasks.get()
             try:
                 func(*args, **kargs)
+            except QuitTask:
+                self.tasks.task_done()
+                return
             except Exception as e:
                 # An exception happened in this thread
                 print(e)
@@ -70,4 +75,6 @@ if __name__ == "__main__":
     # makes it possible to cancel the thread pool with an exception when
     # the currently running batch of workers is finished.
     pool.map(wait_delay, delays)
+    while True:
+        pass
     pool.wait_completion()
