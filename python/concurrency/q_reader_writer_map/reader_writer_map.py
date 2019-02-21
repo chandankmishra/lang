@@ -80,6 +80,7 @@ class RwMap:
 
     def resize(self, new_capacity):
         self.main_lock.write_lock()
+        self.capacity = new_capacity
         new_list = [(RwLock(), {}) for _ in range(new_capacity)]
         for lock, old_rw_map in self.rw_list:
             for key in old_rw_map:
@@ -90,8 +91,11 @@ class RwMap:
         self.main_lock.write_unlock()
 
     def display(self):
+        print (self.capacity)
         for i, val in enumerate(self.rw_list):
-            print (i, val)
+            hashmap = val[1]
+            for key in hashmap:
+                print ("i", i, "key", key, hashmap[key])
 
 
 def main():
