@@ -5,7 +5,7 @@ import time
 import random
 
 
-class RwLockFair:
+class RwLock: #RwLockFair
     """ Read write lock giving fairness to both read and write. """
 
     def __init__(self):
@@ -49,8 +49,8 @@ class RwMap:
     def __init__(self, capacity=5):
         self.capacity = capacity
         self.size = 0
-        self.main_lock = RwLockFair()
-        self.rw_list = [(RwLockFair(), {}) for _ in range(self.capacity)]
+        self.main_lock = RwLock()
+        self.rw_list = [(RwLock(), {}) for _ in range(self.capacity)]
 
     def get(self, key):
         k = key % self.capacity
@@ -80,7 +80,7 @@ class RwMap:
 
     def resize(self, new_capacity):
         self.main_lock.write_lock()
-        new_list = [(RwLockFair(), {}) for _ in range(new_capacity)]
+        new_list = [(RwLock(), {}) for _ in range(new_capacity)]
         for lock, old_rw_map in self.rw_list:
             for key in old_rw_map:
                 k = key % new_capacity
@@ -96,8 +96,8 @@ class RwMap:
 
 def main():
     rw_map = RwMap()
-    rw_map.put(1, "chandan")
-    rw_map.put(2, "veena")
+    rw_map.put(1, "cha1")
+    rw_map.put(2, "cha2")
     rw_map.display()
     rw_map.resize(10)
     rw_map.display()
