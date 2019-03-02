@@ -48,7 +48,6 @@ class RwLock: #RwLockFair
 class RwMap:
     def __init__(self, capacity=5):
         self.capacity = capacity
-        self.size = 0
         self.main_lock = RwLock()
         self.rw_list = [(RwLock(), {}) for _ in range(self.capacity)]
 
@@ -74,7 +73,6 @@ class RwMap:
         rw_lock = val[0]
         rw_lock.write_lock()
         bucket_map[key] = data
-        self.size += 1
         rw_lock.write_unlock()
         self.main_lock.read_unlock()
 
