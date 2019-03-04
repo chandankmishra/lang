@@ -121,6 +121,9 @@ arr = [[1, 3, 1], [1, 50, 10], [4, 2, 1]]
 '''
 62. Unique Paths
 https://leetcode.com/problems/unique-paths/
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+How many possible unique paths are there?
 Formula:
 dp[rows-1][cols-1] = 1
 dp[r][c] = dp[r+1][c] + dp[r][c+1]
@@ -144,6 +147,9 @@ def unique_paths(cols, rows):
 '''
 63. Unique Paths II
 https://leetcode.com/problems/unique-paths-ii/description/
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
 Formula:
 # dp[rows-1][cols-1] = 1
 # dp[r][c] = dp[r+1][c] + dp[r][c+1]
@@ -173,6 +179,7 @@ arr = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
 '''
 583. Delete Operation for Two Strings (Longest Common Subsequence)
 https://leetcode.com/problems/delete-operation-for-two-strings/description/
+Given two sequences, find the length of longest subsequence present in both of them
 Formula:
 dp[i][j] = dp[i-1][j-1] + 1 if word1[i-1] == word2[j-1]
 dp[i][j] = max(dp[i-1][j], dp[i][j-1]) else
