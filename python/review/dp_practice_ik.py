@@ -1,3 +1,21 @@
+'''
+https://leetcode.com/problems/climbing-stairs/description/
+https://leetcode.com/problems/house-robber/description/
+https://leetcode.com/problems/coin-change/
+https://leetcode.com/problems/coin-change-2/description/
+https://leetcode.com/problems/minimum-path-sum/
+https://leetcode.com/problems/unique-paths/
+https://leetcode.com/problems/unique-paths-ii/description/
+https://leetcode.com/problems/delete-operation-for-two-strings/description/
+https://leetcode.com/problems/interleaving-string/description/
+https://leetcode.com/problems/maximal-square/description/
+https://leetcode.com/problems/partition-equal-subset-sum/description/
+https://leetcode.com/problems/edit-distance/description/
+https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/
+https://leetcode.com/problems/word-break/description/
+https://leetcode.com/problems/word-break-ii/description/
+'''
+
 ''' 70. Climbing Stairs
 https://leetcode.com/problems/climbing-stairs/description/
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
