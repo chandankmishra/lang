@@ -1,5 +1,6 @@
 ''' 70. Climbing Stairs
 https://leetcode.com/problems/climbing-stairs/description/
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 Formula:
 dp[0] = 1
 dp[n] = dp[n-1] + dp[n-2]
@@ -20,6 +21,8 @@ def climb_stairs(n):
 ###################################################
 ''' 198. House Robber
 https://leetcode.com/problems/house-robber/description/
+Constriant: Two consecutive houses can not be robbed.
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
 Formula:
 dp[1] = nums[0]
 dp[n] = max(dp[n-1], dp[n-2]+nums[n-1])
@@ -35,14 +38,16 @@ def house_robber(nums):
     return dp[n]
 
 
-# print (house_robber([1, 2, 3, 1]))  # 4
-# print (house_robber([2, 7, 9, 3, 1]))  # 12
+print (house_robber([1, 2, 3, 1]))  # 4
+print (house_robber([2, 7, 9, 3, 1]))  # 12
 ######################################################
 ''' 322. Coin Change
 https://leetcode.com/problems/coin-change/
+You are given coins of different denominations and a total amount of money amount.
+Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
 Formula
 dp[0] = 0
-dp[n] = min((dp[i-d0], dp[i-d1].... dp[i-di], ... dp[i-dn-1]) + 1
+dp[n] = min((dp[i-d0], dp[i-d1]..... dp[i-dn-1]) + 1
 '''
 
 
@@ -63,11 +68,13 @@ def coin_change(coins, amount):
 ######################################################
 ''' 518. Coin Change 2
 https://leetcode.com/problems/coin-change-2/description/
+You are given coins of different denominations and a total amount of money. Write a function to compute the number of combinations that make up that amount. You may assume that you have infinite number of each kind of coin.
 Formula
 The outer loop should be for coin. So that came coin should not be counted multiple time for different amounts
 # dp[0] = 1
 # dp[n] = sum((dp[i-d0], dp[i-d1].... dp[i-di], ... dp[i-dn-1]) (i-dk >=0)
 '''
+
 
 def coin_change2(coins, amount):
     dp = [0] * (amount + 1)
@@ -87,10 +94,12 @@ def coin_change2(coins, amount):
 '''
 64. Minimum Path Sum
 https://leetcode.com/problems/minimum-path-sum/
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
 Formula:
 dp[n-1][m-1] = grid[n-1][m-1]
 dp[r][c] = min(dp[r + 1][c], dp[r][c + 1]) + grid[r][c]
 '''
+
 
 def min_path_sum(grid):
     n = len(grid)
@@ -117,6 +126,7 @@ dp[rows-1][cols-1] = 1
 dp[r][c] = dp[r+1][c] + dp[r][c+1]
 '''
 
+
 def unique_paths(cols, rows):
     dp = [[0 for _ in range(cols + 1)] for _ in range(rows + 1)]
     for r in range(rows - 1, -1, -1):
@@ -139,6 +149,7 @@ Formula:
 # dp[r][c] = dp[r+1][c] + dp[r][c+1]
 if grid[r][c] == 1 continue 0=>OK 1=>Obstracles
 '''
+
 
 def unique_paths(grid):
     rows = len(grid)
@@ -220,6 +231,7 @@ dp[0][m] = grid[0][m] # not required if dp table size is n+1, m+1
 dp[r][c] = min(dp[r-1][c-1], dp[r-1][c], dp[r][c-1]) +1
 '''
 
+
 def maximalSquare(matrix):
     n, m = len(matrix), len(matrix[0])
     dp = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
@@ -241,6 +253,7 @@ https://leetcode.com/problems/partition-equal-subset-sum/description/
 Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
 Formula:
 '''
+
 
 def helper(nums, start, target, memo):
     n = len(nums)
@@ -277,14 +290,15 @@ def canPartition(nums):
 
 '''
 Knight's tour!
-How many different phone numbers of given length can be formed starting from the 
-given digit? The constraint is that the movement from one digit to the next is 
+How many different phone numbers of given length can be formed starting from the
+given digit? The constraint is that the movement from one digit to the next is
 similar to the movement of the Knight in a chess game.
 
 Formula:
 dp[digit][num_digit] = (dp[0][num_digit - 1], dp[1][num_digit - 1],.... dp[i][num_digit - 1]) for i in range(moves[digit])
 
 '''
+
 
 def num_phone_numbers(startdigit, phonenumberlength):
     move = [[4, 6], [8, 6], [7, 9], [4, 8], [3, 9, 0], [None], [1, 7, 0], [2, 6], [1, 3], [2, 4]]
@@ -434,9 +448,9 @@ def wordBreakMemo(s, wordDict):
     return helper(s, 0, set(wordDict), {})
 
 
-print (wordBreakMemo("leetcode", ["leet", "code"]))
-print (wordBreakMemo("applepenapple", ["apple", "pen"]))
-print (wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+# print (wordBreakMemo("leetcode", ["leet", "code"]))
+# print (wordBreakMemo("applepenapple", ["apple", "pen"]))
+# print (wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
 
 
 '''
