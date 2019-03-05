@@ -1,6 +1,7 @@
 def get_max_palindrome_len(text, start, end):
     n = len(text)
-    while start >= 0 and end < n and start <= end:
+    #while start >= 0 and end < n and start <= end:
+    while start >= 0 and end < n:
         if text[start] != text[end]:
             break
         start, end = start-1, end+1
