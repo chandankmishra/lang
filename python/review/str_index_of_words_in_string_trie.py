@@ -33,7 +33,6 @@ class Trie:
         current.positions.append(index)
 
     def add_words(self, text):
-        trie = Trie()
         i, n = 0, len(text)
 
         start, end = -1, -1
@@ -61,7 +60,7 @@ def find_words(text, words):
 
 
 def main():
-    text = "my name is chandan mishra"
+    text = "my name is chandan mishra. chandan likes leetcode"
     words = ["my", "name", "chandan", "kumar"]
     print (find_words(text, words))
 

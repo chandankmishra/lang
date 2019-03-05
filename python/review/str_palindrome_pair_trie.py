@@ -25,7 +25,8 @@ class Trie:
         current_node.pos.append(index)
 
     def isPalindrome(self, word, start, end):
-        return word[start:end + 1] == word[start:end + 1][::-1]
+        s = word[start:end + 1]
+        return s == s[::-1]
 
     def search(self, word, index, result):
         current_node = self.root
