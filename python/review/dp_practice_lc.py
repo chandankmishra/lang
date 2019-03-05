@@ -35,15 +35,15 @@ def maxSubArray(A):
     max_so_far = 0
     current_sum = 0
     for num in A:
-        current_sum += num
         if current_sum < 0:
             current_sum = 0
+        current_sum += num
         max_so_far = max(max_so_far, current_sum)
     return max_so_far
 
 
-# print (maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
-# print (maxSubArray([-2, 1, -3, 4, -1, 2, 1, 1, 20, -10, 22, 14, 25, 21, -3, -5, 4]))
+print (maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+print (maxSubArray([-2, 1, -3, 4, -1, 2, 1, 1, 20, -10, 22, 14, 25, 21, -3, -5, 4]))
 
 '''
 139. Word Break
@@ -56,6 +56,31 @@ def wordBreakMemo(s, wordDict):
     pass
 
 
-print (wordBreakMemo("leetcode", ["leet", "code"]))
-print (wordBreakMemo("applepenapple", ["apple", "pen"]))
-print (wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+# print (wordBreakMemo("leetcode", ["leet", "code"]))
+# print (wordBreakMemo("applepenapple", ["apple", "pen"]))
+# print (wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+
+'''
+516. Longest Palindromic Subsequence
+https://leetcode.com/problems/longest-palindromic-subsequence/description/
+Given a string s, find the longest palindromic subsequence's length in s. You may assume that the maximum length of s is 1000.
+'''
+
+
+def longestPalindromeSubseq(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    print (n)
+    for i in range(n - 1, -1, -1):
+        for j in range(i + 1, n):
+            print ("i", i, "j", j)
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return (dp[0][n - 1])
+
+
+print (longestPalindromeSubseq("bbbab"))

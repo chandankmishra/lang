@@ -1,19 +1,25 @@
 '''
-https://leetcode.com/problems/climbing-stairs/description/
-https://leetcode.com/problems/house-robber/description/
+https://leetcode.com/problems/climbing-stairs/description/                      DONE
+https://leetcode.com/problems/house-robber/description/                         DONE
 https://leetcode.com/problems/coin-change/
-https://leetcode.com/problems/coin-change-2/description/
-https://leetcode.com/problems/minimum-path-sum/
-https://leetcode.com/problems/unique-paths/
-https://leetcode.com/problems/unique-paths-ii/description/
-https://leetcode.com/problems/delete-operation-for-two-strings/description/
-https://leetcode.com/problems/interleaving-string/description/
-https://leetcode.com/problems/maximal-square/description/
-https://leetcode.com/problems/partition-equal-subset-sum/description/
-https://leetcode.com/problems/edit-distance/description/
-https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/
-https://leetcode.com/problems/word-break/description/
-https://leetcode.com/problems/word-break-ii/description/
+https://leetcode.com/problems/coin-change-2/description/                        #PENDING
+https://leetcode.com/problems/minimum-path-sum/                                 DONE
+https://leetcode.com/problems/unique-paths/                                     DONE
+https://leetcode.com/problems/unique-paths-ii/description/                      DONE
+https://leetcode.com/problems/min-cost-climbing-stairs/description/             #PENDING
+
+https://leetcode.com/problems/partition-equal-subset-sum/description/           #PENDING
+https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/                    #PENDING
+
+https://leetcode.com/problems/interleaving-string/description/                  DONE
+https://leetcode.com/problems/delete-operation-for-two-strings/description/     DONE
+https://leetcode.com/problems/edit-distance/description/                        DONE
+https://leetcode.com/problems/word-break/description/                           #PENDING
+https://leetcode.com/problems/word-break-ii/description/                        #PENDING
+
+https://leetcode.com/problems/maximal-square/description/                       DONE
+
+
 '''
 
 ''' 70. Climbing Stairs
@@ -75,7 +81,7 @@ def coin_change(coins, amount):
     for i in range(amount + 1):
         for coin in coins:
             if i - coin >= 0:
-                dp[i] = min(dp[i], dp[i - coin]) + 1
+                dp[i] = min(dp[i], dp[i - coin] + 1)
     if dp[amount] == float("inf"):
         return -1
     return dp[amount]
@@ -123,10 +129,10 @@ def min_path_sum(grid):
     n = len(grid)
     m = len(grid[0])
     dp = [[float("inf") for _ in range(m + 1)] for _ in range(n + 1)]
+    dp[n - 1][m - 1] = grid[n - 1][m - 1]
     for r in range(n - 1, -1, -1):
         for c in range(m - 1, -1, -1):
             if r == n - 1 and c == m - 1:
-                dp[r][c] = grid[r][c]
                 continue
             dp[r][c] = min(dp[r + 1][c], dp[r][c + 1]) + grid[r][c]
     return dp[0][0]
@@ -179,12 +185,13 @@ def unique_paths(grid):
     rows = len(grid)
     cols = len(grid[0])
     dp = [[0 for _ in range(cols + 1)] for _ in range(rows + 1)]
+    if grid[n - 1][m - 1] == 0:
+        dp[n - 1][m - 1] = 1
     for r in range(rows - 1, -1, -1):
         for c in range(cols - 1, -1, -1):
             if grid[r][c] == 1:
                 continue
             if r == rows - 1 and c == cols - 1:
-                dp[r][c] = 1
                 continue
             dp[r][c] = dp[r + 1][c] + dp[r][c + 1]
     return dp[0][0]
@@ -199,8 +206,8 @@ arr = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
 https://leetcode.com/problems/delete-operation-for-two-strings/description/
 Given two sequences, find the length of longest subsequence present in both of them
 Formula:
-dp[i][j] = dp[i-1][j-1] + 1 if word1[i-1] == word2[j-1]
-dp[i][j] = max(dp[i-1][j], dp[i][j-1]) else
+if word1[i-1] == word2[j-1]: dp[i][j] = dp[i-1][j-1] + 1
+else: dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 '''
 
 
@@ -242,7 +249,7 @@ def isInterleave(s1, s2, s3):
 
 
 s1, s2, s3 = "aabcc", "dbbca", "aadbbcbcac"
-# print (isInterleave(s1, s2, s3))
+print (isInterleave(s1, s2, s3))
 s1, s2, s3 = "aabcc", "dbbca", "aadbbbaccc"
 # print (isInterleave(s1, s2, s3))
 
