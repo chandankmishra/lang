@@ -34,11 +34,12 @@ class AutocompleteSystem:
         return res
 
 
-sentences = ["i love you", "island", "ironman", "i love leetcode"]
-times = [5, 3, 2, 2]
+sentences = ["i love you", "island", "ironman", "i love leetcode", "i lost book"]
+times = [5, 3, 2, 2, 3]
 obj = AutocompleteSystem(sentences, times)
 print(obj.input('i'))
 print(obj.input(' '))
 print(obj.input('l'))
 print(obj.input('o'))
+print(obj.input('v'))
 # print(obj.input(''))
