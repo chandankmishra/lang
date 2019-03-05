@@ -7,8 +7,8 @@ class AutocompleteSystem:
         :type times: List[int]
         """
         self.map = {}
-        for setence, time in zip(sentences, times):
-            self.map[setence] = time
+        for sentence, time in zip(sentences, times):
+            self.map[sentence] = time
 
     def input(self, c):
         """
