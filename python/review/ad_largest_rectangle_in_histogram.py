@@ -8,16 +8,16 @@ Given n non-negative integers representing the histogram's bar height where the 
 def largestRectangleArea(heights):
     # Using Stack Time Complexity O(n). Space Complexity O(n)
     # index is list of pillar index
-    indices, max_area = [], 0
+    stack, max_area = [], 0
     for i, h in enumerate(heights + [0]):
-        while indices and heights[indices[-1]] >= h:
-            height = heights[indices.pop()]
-            if indices:
-                width = i - indices[-1] - 1
+        while stack and heights[stack[-1]] >= h:
+            height = heights[stack.pop()]
+            if stack:
+                width = i - stack[-1] - 1
             else:
                 width = i
             max_area = max(max_area, height * width)
-        indices.append(i)
+        stack.append(i)
     return max_area
 
 print (largestRectangleArea([2, 1, 5, 6, 2, 3]))  # ans=10
