@@ -15,7 +15,7 @@ class Graph:
         if parent[i] == -1:
             return i
         if parent[i] != -1:
-            return self.find_parent(parent,parent[i])
+            return self.find_parent(parent, parent[i])
 
     def union(self, parent, x, y):
         x_set = self.find_parent(parent, x)
@@ -23,8 +23,7 @@ class Graph:
         parent[x_set] = y_set
 
     def isCyclic(self):
-        V = len(self.vertex_list)
-        parent = [-1] * V
+        parent = [-1] * len(self.vertex_list) 
         # Iterate through all edges of graph, find subset of both
         # vertices of every edge, if both subsets are same, then
         # there is cycle in graph.
@@ -32,8 +31,9 @@ class Graph:
             for j in self.vertex_list[i]:
                 x = self.find_parent(parent, i)
                 y = self.find_parent(parent, j)
-                if x == y: return True
-                self.union(parent,x,y)
+                if x == y:
+                    return True
+                self.union(parent, x, y)
         return False
 
 
