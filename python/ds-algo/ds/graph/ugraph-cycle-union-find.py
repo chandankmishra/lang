@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 class Graph:
     def __init__(self):
         self.vertex_list = {}
@@ -27,10 +25,10 @@ class Graph:
         # Iterate through all edges of graph, find subset of both
         # vertices of every edge, if both subsets are same, then
         # there is cycle in graph.
-        for i in self.vertex_list:
-            for j in self.vertex_list[i]:
-                x = self.find_parent(parent, i)
-                y = self.find_parent(parent, j)
+        for cur in self.vertex_list:
+            for nxt in self.vertex_list[cur]:
+                x = self.find_parent(parent, cur)
+                y = self.find_parent(parent, nxt)
                 if x == y:
                     return True
                 self.union(parent, x, y)
