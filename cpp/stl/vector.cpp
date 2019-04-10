@@ -14,20 +14,20 @@ using namespace std;
 void test_vector()
 {
     vector <int> g1;
-    vector <int> ::iterator i;
-    vector <int> ::reverse_iterator ri;
+    //vector <int> ::iterator i;
+    //vector <int> ::reverse_iterator ri;
 
     //push_back, begin, end, iterator
     for (int i = 0; i < 5; i++) {
         g1.push_back(i * 10);
     }
 
-    for (i = g1.begin(); i != g1.end(); i++) {
+    for (auto i = g1.begin(); i != g1.end(); i++) {
         cout << *i << '\t';
     } 
     cout << endl;
 
-    for (ri = g1.rbegin(); ri != g1.rend(); ri++) {
+    for (auto ri = g1.rbegin(); ri != g1.rend(); ri++) {
         cout << *ri << '\t';
     }
     cout << endl;
@@ -150,22 +150,22 @@ void test_vector()
     cout << "Before Swapping, \n"
          <<"Contents of vector g14 : ";
  
-    for (i = g14.begin(); i != g14.end(); ++i)
+    for (auto i = g14.begin(); i != g14.end(); ++i)
         cout << *i << '\t';
  
     cout << "\nContents of vector g15 : ";
-    for (i = g15.begin(); i != g15.end(); ++i)
+    for (auto i = g15.begin(); i != g15.end(); ++i)
         cout << *i << '\t';
  
     swap(g14, g15);
  
     cout << "\n\nAfter Swapping, \n";
     cout << "Contents of vector g14 : ";
-    for (i = g14.begin(); i != g14.end(); ++i)
+    for (auto i = g14.begin(); i != g14.end(); ++i)
         cout << *i << '\t';
  
     cout << "\nContents of vector g15 : ";
-    for (i = g15.begin(); i != g15.end(); ++i)
+    for (auto i = g15.begin(); i != g15.end(); ++i)
         cout << *i << '\t';
  
     cout << "\n\nNow, we clear() and then add "
@@ -196,7 +196,7 @@ void test_vector()
         cout << " " << *it;
     }
     cout << endl;
-    for (ri=v1.rbegin(); ri != v1.rend(); ri++){
+    for (auto ri=v1.rbegin(); ri != v1.rend(); ri++){
         cout << " " << *ri;
     }
     cout << endl;
@@ -205,4 +205,11 @@ void test_vector()
         v1.pop_back();
     }
     cout << endl << "isempty " << v1.empty() << endl;
+}
+
+
+int main()
+{
+    test_vector();
+    return 0;
 }
