@@ -1,9 +1,6 @@
-def choose_pivot(arr, start, end):
-    return start
-
-# Partition with 2 pointers
-def partition(arr, start, end, p_index_before):
+def partition(arr, start, end):
     # swap pivot element with last element
+    p_index_before = (start + end) // 2
     arr[end], arr[p_index_before] = arr[p_index_before], arr[end]
     pivot = arr[end]
     i = start
@@ -15,7 +12,7 @@ def partition(arr, start, end, p_index_before):
     return i
 
 
-def quick_sort(arr, start, end):
+def quick_sort_rec(arr, start, end):
     # base cases
     if start == end:
         return  # array has 1 element
@@ -23,30 +20,43 @@ def quick_sort(arr, start, end):
         return  # array has 0 element
 
     # get the pivot index
-    p_index_before = choose_pivot(arr, start, end)
-    p_index = partition(arr, start, end, p_index_before)
+    p_index = partition(arr, start, end)
     # recursively call the quick_sort
-    quick_sort(arr, start, p_index - 1)
-    quick_sort(arr, p_index + 1, end)
+    quick_sort_rec(arr, start, p_index - 1)
+    quick_sort_rec(arr, p_index + 1, end)
+
+
+def quick_sort_iter(arr, left, right):
+    # Create an auxiliary stack
+    size = right - left + 1
+    stack = [0] * (size)
+    top = -1
+    top = top + 1
+    stack[top] = left
+    top = top + 1
+    stack[top] = right
+    print (left, right, stack)
+
+    while top >= 0:
+        right = stack[top]
+        top = top - 1
+        left = stack[top]
+        top = top - 1
+
+        p_index = partition(arr, left, right)
+        if p_index - 1 > left:
+            top = top + 1
+            stack[top] = left
+            top = top + 1
+            stack[top] = p_index - 1
+
+        if p_index + 1 < right:
+            top = top + 1
+            stack[top] = p_index + 1
+            top = top + 1
+            stack[top] = right
 
 
 arr = [50, 100, 10, 20, 30, 40]
-quick_sort(arr, 0, len(arr) - 1)
+quick_sort_iter(arr, 0, len(arr) - 1)
 print(arr)
-
-
-# method #1 Partition using 2 pointers
-# arr_new = []
-# arr_new[le_count - 1] = arr[p_index_before]
-# for idx, ele in zip(arr):
-#     if idx == p_index_before:
-#         continue
-#     if ele <= p_val:
-#         arr_new.append(ele)
-
-# for idx, ele in zip(arr):
-#     if idx == p_index_before:
-#         continue
-#     if ele > p_val:
-#         arr_new.append(ele)
-# return le_count - 1
