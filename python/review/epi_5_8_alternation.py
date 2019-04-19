@@ -1,5 +1,3 @@
-
-
 def rearrange(A):
     n = len(A)
     for idx in range(n - 1):

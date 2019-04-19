@@ -7,17 +7,16 @@ https://leetcode.com/problems/minimum-path-sum/                                 
 https://leetcode.com/problems/unique-paths/                                     DONE
 https://leetcode.com/problems/unique-paths-ii/description/                      DONE
 https://leetcode.com/problems/min-cost-climbing-stairs/description/             #PENDING
-
-https://leetcode.com/problems/partition-equal-subset-sum/description/           #PENDING
+https://leetcode.com/problems/maximal-square/description/                       DONE
 https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/                    #PENDING
-
-https://leetcode.com/problems/interleaving-string/description/                  DONE
 https://leetcode.com/problems/delete-operation-for-two-strings/description/     DONE
 https://leetcode.com/problems/edit-distance/description/                        DONE
+https://leetcode.com/problems/interleaving-string/description/                  DONE
+
+https://leetcode.com/problems/partition-equal-subset-sum/description/           #PENDING
 https://leetcode.com/problems/word-break/description/                           #PENDING
 https://leetcode.com/problems/word-break-ii/description/                        #PENDING
 
-https://leetcode.com/problems/maximal-square/description/                       DONE
 
 
 '''
@@ -62,8 +61,8 @@ def house_robber(nums):
     return dp[n]
 
 
-print (house_robber([1, 2, 3, 1]))  # 4
-print (house_robber([2, 7, 9, 3, 1]))  # 12
+# print (house_robber([1, 2, 3, 1]))  # 4
+# print (house_robber([2, 7, 9, 3, 1]))  # 12
 ######################################################
 ''' 322. Coin Change
 https://leetcode.com/problems/coin-change/
@@ -96,7 +95,7 @@ You are given coins of different denominations and a total amount of money. Writ
 Formula
 The outer loop should be for coin. So that came coin should not be counted multiple time for different amounts
 # dp[0] = 1
-# dp[n] = sum((dp[i-d0], dp[i-d1].... dp[i-di], ... dp[i-dn-1]) (i-dk >=0)
+# dp[n] = sum((dp[i-d0], dp[i-d1]..... dp[i-dn-1]) (i-dk >=0)
 '''
 
 
@@ -229,6 +228,8 @@ def lcs(word1, word2):
 https://leetcode.com/problems/interleaving-string/description/
 Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
 Formula:
+if n1 + n2 != n3: return False
+dp[0][0] = True
 dp[i][j] = True if dp[i-1][j] and s1[i-1] == s3[i+j-1]
                 or dp[i][j-1] and s2[j-1] == s3[i+j-1]
 '''
@@ -249,7 +250,7 @@ def isInterleave(s1, s2, s3):
 
 
 s1, s2, s3 = "aabcc", "dbbca", "aadbbcbcac"
-print (isInterleave(s1, s2, s3))
+# print (isInterleave(s1, s2, s3))
 s1, s2, s3 = "aabcc", "dbbca", "aadbbbaccc"
 # print (isInterleave(s1, s2, s3))
 
@@ -287,7 +288,7 @@ Formula:
 '''
 
 
-def helper(nums, start, target, memo):
+def helper(nums, start, target, cache):
     n = len(nums)
     if target < 0 or start == n:
         return False
@@ -295,15 +296,15 @@ def helper(nums, start, target, memo):
     if target == 0:
         return True
 
-    if memo[start][target] is not None:
-        return memo[start][target]
+    if (start, target) in cache:
+        return cache[(start, target)]
     # target - nums[start] includes nums[start] in the target sum
     # other case excludes the nums[start] from the target sum
-    if helper(nums, start + 1, target, memo) or helper(nums, start + 1, target - nums[start], memo):
-        memo[start][target] = True
+    if helper(nums, start + 1, target, cache) or helper(nums, start + 1, target - nums[start], cache):
+        cache[(start, target)] = True
         return True
 
-    memo[start][target] = False
+    cache[(start, target)] = False
     return False
 
 
@@ -313,12 +314,16 @@ def canPartition(nums):
         return False
     target = target // 2
     n = len(nums)
-    memo = [[None for _ in range(target + 1)] for _ in range(n)]
-    return helper(nums, 0, target, memo)
+    cache = {}
+    return helper(nums, 0, target, cache)
 
 
-#print (canPartition([1, 5, 11, 5]))
-#print (canPartition([1, 2, 3, 5]))
+arr = [1, 5, 11, 5]
+print ("canPartition", arr, canPartition(arr))
+arr = [1, 2, 3, 5]
+print ("canPartition", arr, canPartition(arr))
+arr = [1, 2, 3, 5, 8]
+print ("canPartition", arr, canPartition(arr))
 
 '''
 Knight's tour!
@@ -480,9 +485,9 @@ def wordBreakMemo(s, wordDict):
     return helper(s, 0, set(wordDict), {})
 
 
-# print (wordBreakMemo("leetcode", ["leet", "code"]))
-# print (wordBreakMemo("applepenapple", ["apple", "pen"]))
-# print (wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+# print ("leetcode", wordBreakMemo("leetcode", ["leet", "code"]))
+# print ("applepenapple", wordBreakMemo("applepenapple", ["apple", "pen"]))
+# print ("catsandog", wordBreakMemo("catsandog", ["cats", "dog", "sand", "and", "cat"]))
 
 
 '''
@@ -522,6 +527,7 @@ def helper2(s, start, wordDict, cache):
     new_lst = []
     for end in range(start + 1, n + 1):
         left = s[start:end + 1]
+        # print (left, start, end)
         if left not in wordDict:
             continue
 

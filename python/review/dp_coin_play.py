@@ -9,8 +9,7 @@ def helper(coins, dp, a, b):
 
 
 def optimalStrategyRecursive(coins, n):
-    dp = [[0 for i in range(n)]
-          for i in range(n)]
+    dp = [[0 for i in range(n)] for i in range(n)]
     return helper(coins, dp, 0, n - 1)
 
 

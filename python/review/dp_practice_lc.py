@@ -84,3 +84,20 @@ def longestPalindromeSubseq(s):
 
 
 print (longestPalindromeSubseq("bbbab"))
+
+
+def check_if_sum_possible(arr, k):
+    if k == 0 and k not in arr:
+        return False
+    dp = [False] * (k + 1)
+    dp[0] = True
+    for num in arr:
+        for i in range(k + 1):
+            if i - num < 0:
+                continue
+            if dp[i - num]:
+                dp[i] = True
+    return dp[k]
+
+
+print (check_if_sum_possible([2, 4, 8], 6))

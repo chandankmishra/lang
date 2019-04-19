@@ -19,14 +19,16 @@ def dijkstra(start, end):
 
     while pq.size() > 0:
         v, dist = pq.pop() 
-        if v == end: return dist
-        for n, wt in v.neighbours.items():
-            if n in exhausted:
+        if v == end:
+            return dist
+
+        for next_node, wt in v.neighbours.items():
+            if next_node in exhausted:
                 continue
-            curr_dist = pq.get_priority(n, float("inf"))
+            curr_dist = pq.get_priority(next_node, float("inf"))
             if dist + wt < curr_dist:
-                back_refs[n] = v
-                pq.set_priority(n, dist + wt)
+                back_refs[next_node] = v
+                pq.set_priority(next_node, dist + wt)
         exhausted.add(v) 
 
     if end not in back_refs:
