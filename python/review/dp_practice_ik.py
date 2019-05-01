@@ -17,6 +17,8 @@ https://leetcode.com/problems/partition-equal-subset-sum/description/           
 https://leetcode.com/problems/word-break/description/                           #PENDING
 https://leetcode.com/problems/word-break-ii/description/                        #PENDING
 
+https://leetcode.com/problems/cherry-pickup/
+https://leetcode.com/problems/dungeon-game/
 
 
 '''
@@ -184,8 +186,7 @@ def unique_paths(grid):
     rows = len(grid)
     cols = len(grid[0])
     dp = [[0 for _ in range(cols + 1)] for _ in range(rows + 1)]
-    if grid[n - 1][m - 1] == 0:
-        dp[n - 1][m - 1] = 1
+    dp[n - 1][m - 1] = 1
     for r in range(rows - 1, -1, -1):
         for c in range(cols - 1, -1, -1):
             if grid[r][c] == 1:
@@ -280,50 +281,6 @@ def maximalSquare(matrix):
 matrix = [["1", "0", "1", "0", "0"], ["1", "0", "1", "1", "1"], ["1", "1", "1", "1", "1"], ["1", "0", "0", "1", "0"]]
 # print (maximalSquare(matrix))
 
-'''
-416. Partition Equal Subset Sum
-https://leetcode.com/problems/partition-equal-subset-sum/description/
-Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
-Formula:
-'''
-
-
-def helper(nums, start, target, cache):
-    n = len(nums)
-    if target < 0 or start == n:
-        return False
-
-    if target == 0:
-        return True
-
-    if (start, target) in cache:
-        return cache[(start, target)]
-    # target - nums[start] includes nums[start] in the target sum
-    # other case excludes the nums[start] from the target sum
-    if helper(nums, start + 1, target, cache) or helper(nums, start + 1, target - nums[start], cache):
-        cache[(start, target)] = True
-        return True
-
-    cache[(start, target)] = False
-    return False
-
-
-def canPartition(nums):
-    target = sum(nums)
-    if target % 2 == 1:
-        return False
-    target = target // 2
-    n = len(nums)
-    cache = {}
-    return helper(nums, 0, target, cache)
-
-
-arr = [1, 5, 11, 5]
-print ("canPartition", arr, canPartition(arr))
-arr = [1, 2, 3, 5]
-print ("canPartition", arr, canPartition(arr))
-arr = [1, 2, 3, 5, 8]
-print ("canPartition", arr, canPartition(arr))
 
 '''
 Knight's tour!
@@ -550,3 +507,186 @@ def wordBreak2Memo(s, wordDict):
 # print (wordBreak2DP("leetcode", ["leet", "code"]))
 # print (wordBreak2DP("applepenapple", ["apple", "pen"]))
 # print (wordBreak2DP("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+
+
+'''
+416. Partition Equal Subset Sum
+https://leetcode.com/problems/partition-equal-subset-sum/description/
+Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+Formula:
+'''
+
+
+def findSum(nums, start, target, memo):
+    if (start, target) in memo:
+        return memo[(start, target)]
+
+    if target < 0:
+        return False
+    elif target == 0:
+        return True
+
+    for i in range(start, len(nums)):
+        if findSum(nums, i + 1, target - nums[i], memo):
+            return True
+    memo[(start, target)] = False
+    return False
+
+
+def canPartition2Subset(nums):
+    s = sum(nums)
+    if s % 2:
+        return False
+    s = s / 2
+    return findSum(nums, 0, s, {})
+
+
+testcases = [
+    [1, 5, 11, 5],
+    [1, 2, 3, 5],
+    [1, 2, 3, 5, 8]
+]
+for testcase in testcases:
+    print ("canPartition2Subset", testcase, canPartition2Subset(testcase))
+
+
+'''
+698. Partition to K Equal Sum Subsets
+https://leetcode.com/problems/partition-to-k-equal-sum-subsets/
+Given an array of integers nums and a positive integer k, find whether it's possible to divide this array into k non-empty subsets whose sums are all equal.
+Formula:
+'''
+
+
+def helper1(nums, visited, k, start, cur_sum, target):
+    if k == 1:
+        return True
+
+    n = len(nums)
+    if cur_sum == target:
+        return helper1(nums, visited, k - 1, 0, 0, target)
+
+    for i in range(start, n):
+        if visited[i] == 0:
+            visited[i] = 1
+            if helper1(nums, visited, k, i + 1, cur_sum + nums[i], target):
+                return True
+            visited[i] = 0
+    return False
+
+
+def canPartitionKSubset(nums, k):
+    nsum = sum(nums)
+    n = len(nums)
+    if k <= 0 or nsum % k:
+        return False
+
+    visited = [0] * n
+    target = nsum // k
+    return helper1(nums, visited, k, 0, 0, target)
+
+
+testcases = [
+    [[4, 3, 2, 3, 5, 2, 1], 4],
+    [[2, 2, 2, 2], 4],
+    [[2, 2, 2, 2], 3]
+]
+
+for testcase in testcases:
+    print ("canPartitionKSubset", testcase[0], testcase[1],
+           canPartitionKSubset(testcase[0], testcase[1]))
+
+'''
+410. Split Array Largest Sum
+https://leetcode.com/problems/split-array-largest-sum/
+Given an array which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
+nums = [7,2,5,10,8] m = 2
+Output: 18
+'''
+
+
+def splitArray(nums, m):
+    nlen = len(nums)
+
+    presum = [0] * (nlen + 1)
+    for i, n in enumerate(nums):
+        presum[i + 1] = n + presum[i]
+
+    dp = [[float("inf")] * (m + 1) for _ in range(nlen + 1)]
+    dp[0][0] = 0
+    for i in range(1, nlen + 1):
+        for j in range(1, m + 1):
+            for k in range(i):
+                dp[i][j] = min(dp[i][j], max(dp[k][j - 1], presum[i] - presum[k]))
+    return dp[nlen][m]
+
+
+testcases = [
+    [[7, 2, 5, 10, 8], 2],
+    [[4, 3, 2, 3, 5, 2, 1], 4],
+    [[2, 2, 2, 2], 4],
+    [[2, 2, 2, 2], 3]
+]
+for testcase in testcases:
+    print ("splitArray", testcase[0], testcase[1],
+           "ans", splitArray(testcase[0], testcase[1]))
+
+'''
+741. Cherry Pickup
+https://leetcode.com/problems/cherry-pickup/
+In a N x N grid representing a field of cherries, each cell is one of three possible integers.
+0 means the cell is empty, so you can pass through;
+1 means the cell contains a cherry, that you can pick up and pass through;
+-1 means the cell contains a thorn that blocks your way.
+'''
+def dp(grid, memo, r1, c1, c2):
+    N = len(grid)
+    r2 = r1 + c1 - c2
+    if (N == r1 or N == r2 or N == c1 or N == c2 or grid[r1][c1] == -1 or grid[r2][c2] == -1):
+        return float('-inf')
+    elif r1 == c1 == r2 == c2 == N-1:
+        return grid[r1][c1]
+    elif memo[r1][c1][c2] is not None:
+        return memo[r1][c1][c2]
+    else:
+        if r1 == r1 and c1 == c2:
+            ans = grid[r1][c1]
+        else:
+            ans = grid[r1][c1] + grid[r2][c2]
+
+        ans += max(dp(grid, memo, r1, c1+1, c2+1), dp(grid, memo, r1+1, c1, c2+1),
+            dp(grid, memo, r1, c1+1, c2), dp(grid, memo, r1+1, c1, c2))
+    memo[r1][c1][c2] = ans
+    return ans
+
+def cherryPickup(grid):
+    """
+    :type grid: List[List[int]]
+    :rtype: int
+    """
+    N = len(grid)
+    memo = [[[None] * N for _ in range(N)] for _ in range(N)]
+    return max(0, dp(grid, memo, 0, 0, 0))
+
+grid = [[0,1,-1],[1,0,-1],[1,1,1]]
+print ("cherryPickup", grid, cherryPickup(grid))
+
+'''
+174. Dungeon Game
+https://leetcode.com/problems/dungeon-game/
+'''
+def calculateMinimumHP(d):
+    """
+    :type grid: List[List[int]]
+    :rtype: int
+    """
+    n = len(d)
+    m = len(d[0])
+    dp = [[float("inf") for _ in range(m+1)] for _ in range(n+1)]
+    dp[n-1][m] = dp[n][m-1] = 1
+
+    for i in range(n-1, -1, -1):
+        for j in range(m-1,-1,-1):
+            need = min(dp[i+1][j], dp[i][j+1]) - d[i][j]
+            dp[i][j] = 1 if need <= 0 else need
+    return dp[0][0]
