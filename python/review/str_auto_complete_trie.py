@@ -38,13 +38,12 @@ class Trie:
 
 
 class AutocompleteSystem:
-    cur_sent = ""
-
     def __init__(self, sentences, times):
         """
         :type sentences: List[str]
         :type times: List[int]
         """
+        self.cur_sent = ""
         self.trie = Trie()
         for sentence, time in zip(sentences, times):
             self.trie.insert(sentence, time)
