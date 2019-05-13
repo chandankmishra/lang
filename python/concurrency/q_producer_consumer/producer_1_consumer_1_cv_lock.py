@@ -45,9 +45,10 @@ def consumer():
       cv_empty.wait()
 
     read_idx = (read_idx + 1) % capacity
+    item = arr[read_idx]
     arr[read_idx] = 0
     count -= 1
-    print ("consumer", count, read_idx)
+    print ("consumer", count, item)
     time.sleep(0.1)
 
     cv_full.notify()
