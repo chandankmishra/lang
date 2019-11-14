@@ -13,7 +13,7 @@ Steps:
 
 Commands to Run:
 - cd /Users/chnmish/sw/java
-- export CLASSPATH=${CLASSPATH}:/Users/chnmish/Downloads/mysql-connector.jar
+- export CLASSPATH=/Users/chnmish/sw/java:/Users/chnmish/sw/java/mysql-connector.jar
 - javac JavaMysqlSelectExample.java
 - java JavaMysqlSelectExample
 
