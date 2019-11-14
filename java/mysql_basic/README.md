@@ -17,7 +17,7 @@ Commands to Run:
 - javac JavaMysqlSelectExample.java
 - java JavaMysqlSelectExample
 
-
+```
 bash-3.2$ mysql -u root -p
 
 mysql> use testdb;
@@ -30,3 +30,5 @@ mysql> select * from users;
 |  2 | Chandan    | Mishra    | 2019-11-13 23:24:03 |        0 |      20000 |
 |  3 | Veena      | Mishra    | 2019-11-13 23:24:31 |        1 |      20000 |
 +----+------------+-----------+---------------------+----------+------------+
+
+```
