@@ -5,9 +5,13 @@ Steps:
 2. Install mysql
 3. download mysql connector 
 4. Set classpath to point to mysql connector
+5. create database/tables/entries
+6. Takebackup of database:
 
------ Steps -----
-cd /Users/chnmish/sw/java
-export CLASSPATH=${CLASSPATH}:/Users/chnmish/Downloads/mysql-connector.jar
-javac JavaMysqlSelectExample.java
-java JavaMysqlSelectExample
+Commands:
+- cd /Users/chnmish/sw/java
+- export CLASSPATH=${CLASSPATH}:/Users/chnmish/Downloads/mysql-connector.jar
+- javac JavaMysqlSelectExample.java
+- java JavaMysqlSelectExample
+- mysqldump --databases testdb -u root -p > ~/sw/java/db.sql
+
