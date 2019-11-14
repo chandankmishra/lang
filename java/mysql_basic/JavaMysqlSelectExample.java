@@ -5,7 +5,7 @@ import java.sql.*;
  * Demonstrates the use of a SQL SELECT statement against a
  * MySQL database, called from a Java program.
  * 
- * Created by Alvin Alexander, http://alvinalexander.com
+ * Created by Chandan Mishra
  */
 public class JavaMysqlSelectExample
 {
